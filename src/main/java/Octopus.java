@@ -24,17 +24,28 @@ public class Octopus {
         greet();
 
         Scanner sc = new Scanner(System.in);
+        String[] tasks = new String[100];
+        int count = 0;
+
         while (sc.hasNextLine()) {
-            String input = sc.nextLine();
+            String input = sc.nextLine().trim();
 
             if (input.trim().equalsIgnoreCase("bye")) {
                 goodbye();
                 break;
-            } else {
+            } else if (input.equalsIgnoreCase("list")){  //display the list
                 printLine();
-                System.out.println(" " + input);
+                for (int i = 0; i < count; i++) {
+                    System.out.println(" " + (i + 1) + ". " + tasks[i]);
+                }
                 printLine();
-            }
+            } else if (!input.isEmpty()) { //add any other input as a task
+                tasks[count]= input;
+                count++;
+                printLine();
+                System.out.println(" added: "+ input);
+                printLine();
+                }
         }
         sc.close();
     }
