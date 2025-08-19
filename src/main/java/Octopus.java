@@ -24,29 +24,59 @@ public class Octopus {
         greet();
 
         Scanner sc = new Scanner(System.in);
-        String[] tasks = new String[100];
+        Task[] tasksList = new Task[100];
         int count = 0;
 
         while (sc.hasNextLine()) {
             String input = sc.nextLine().trim();
 
+            // leave chatbot
             if (input.trim().equalsIgnoreCase("bye")) {
                 goodbye();
                 break;
-            } else if (input.equalsIgnoreCase("list")){  //display the list
+
+                //display the list
+            } else if (input.equalsIgnoreCase("list")) {
                 printLine();
+                System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < count; i++) {
-                    System.out.println(" " + (i + 1) + ". " + tasks[i]);
+                    System.out.println(" " + (i + 1) + "." + tasksList[i]);
                 }
                 printLine();
-            } else if (!input.isEmpty()) { //add any other input as a task
-                tasks[count]= input;
+
+                //mark as done
+            } else if (input.startsWith("mark")) {
+                int taskNumber = Integer.parseInt(input.substring(5));
+                if (taskNumber <= count && taskNumber > 0) {
+                    printLine();
+                    tasksList[taskNumber - 1].markDone();
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println(" " + tasksList[taskNumber - 1]);
+                    printLine();
+                }
+
+                //mark as Undone
+            } else if (input.startsWith("unmark")) {
+                int taskNumber = Integer.parseInt(input.substring(7));
+                if (taskNumber <= count && taskNumber > 0) {
+                    printLine();
+                    tasksList[taskNumber - 1].markUndone();
+                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println(" " + tasksList[taskNumber - 1]);
+                    printLine();
+                }
+
+                //add any other input as a task
+            } else if (!input.isEmpty()) {
+                Task t = new Task(input);
+                tasksList[count] = t;
                 count++;
                 printLine();
-                System.out.println(" added: "+ input);
+                System.out.println(" added: " + input);
                 printLine();
-                }
+
+            }
+
         }
-        sc.close();
     }
 }
