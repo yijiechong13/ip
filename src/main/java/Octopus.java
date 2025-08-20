@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Octopus {
     private static final String line = "____________________________________________________________";
@@ -24,7 +25,7 @@ public class Octopus {
         greet();
 
         Scanner sc = new Scanner(System.in);
-        Task[] tasks = new Task[100];
+        ArrayList<Task> tasks = new ArrayList<>();
         int count = 0;
 
         while (sc.hasNextLine()) {
@@ -47,8 +48,8 @@ public class Octopus {
                     //display the list
                     printLine();
                     System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < count; i++) {
-                        System.out.println(" " + (i + 1) + "." + tasks[i]);
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println(" " + (i + 1) + "." + tasks.get(i));
                     }
                     printLine();
                     break;
@@ -60,9 +61,9 @@ public class Octopus {
                         int taskNumber = Integer.parseInt(arguments);
                         if (taskNumber <= count && taskNumber > 0) {
                             printLine();
-                            tasks[taskNumber - 1].markDone();
+                            tasks.get(taskNumber - 1).markDone();
                             System.out.println("Nice! I've marked this task as done:");
-                            System.out.println(" " + tasks[taskNumber - 1]);
+                            System.out.println(" " + tasks.get(taskNumber - 1));
                             printLine();
                             break;
                         } else {
@@ -93,9 +94,9 @@ public class Octopus {
                         int taskNumber = Integer.parseInt(arguments);
                         if (taskNumber <= count && taskNumber > 0) {
                             printLine();
-                            tasks[taskNumber - 1].markUndone();
+                            tasks.get(taskNumber - 1).markUndone();
                             System.out.println("OK, I've marked this task as not done yet:");
-                            System.out.println(" " + tasks[taskNumber - 1]);
+                            System.out.println(" " + tasks.get(taskNumber - 1));
                             printLine();
                             break;
                         } else {
@@ -130,7 +131,7 @@ public class Octopus {
                         break;
                     }
                     Task t = new Todo(arguments);
-                    tasks[count] = t;
+                    tasks.add(t);
                     count++;
                     printLine();
                     System.out.println(" Got it. I've added this task:");
@@ -155,7 +156,7 @@ public class Octopus {
                     }
 
                     Task t = new Deadline(desc, by);
-                    tasks[count] = t;
+                    tasks.add(t);
                     count++;
                     printLine();
                     System.out.println(" Got it. I've added this task:");
@@ -192,7 +193,8 @@ public class Octopus {
                     }
 
                     Task t = new Event(desc, from, to);
-                    tasks[count++] = t;
+                    tasks.add(t);
+                    count++;
                     printLine();
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
@@ -201,10 +203,44 @@ public class Octopus {
                     break;
                 }
 
+                case "delete": {
+                    try {
+                        int taskNumber = Integer.parseInt(arguments);
+                        if (taskNumber <= count && taskNumber > 0) {
+                            Task t = tasks.get(taskNumber - 1);
+                            System.out.println(" Noted. I've removed this task:");
+                            System.out.println(" " + t);
+                            tasks.remove(taskNumber - 1);
+                            count--;
+                            System.out.println("Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                            printLine();
+                            break;
+                        } else {
+                            printLine();
+                            System.out.println("Task number " + taskNumber + " doesn't exist!");
+                            System.out.println("Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                            printLine();
+                            break;
+                        }
+                    } catch (NumberFormatException e) {
+                        printLine();
+                        if (arguments.isEmpty()) {
+                            System.out.println("You forgot to tell me which task!");
+                            System.out.println("  Please specify a task number.");
+                            System.out.println("  Example: delete 2");
+                        } else {
+                            System.out.println("I need a number, not words!");
+                            System.out.println("  Try: delete 1, delete 2, delete 3, etc.");
+                        }
+                        printLine();
+                        break;
+                    }
+                }
+
                 default: {
                     printLine();
                     System.out.println("I don't understand that command!");
-                    System.out.println("Available commands: list, todo, deadline, event, mark, unmark, bye");
+                    System.out.println("Available commands: list, todo, deadline, event, mark, unmark, delete, bye");
                     printLine();
                     break;
                 }
