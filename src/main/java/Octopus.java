@@ -126,7 +126,8 @@ public class Octopus {
                     }
 
                     Task t = new Event(desc, from, to);
-                    tasks[count++] = t;
+                    tasks[count] = t;
+                    count++;
                     printLine();
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
