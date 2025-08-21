@@ -6,11 +6,12 @@ public class Event extends Task{
         super(description);
         this.from = from;
         this.to = to;
+        this.symbol = TaskSymbol.EVENT;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: "+ to + ")";
+        return "[" + symbol.getSymbol()+ "]" + super.toString() + " (from: " + from + " to: "+ to + ")";
     }
 
 }

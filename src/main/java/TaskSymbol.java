@@ -1,4 +1,15 @@
-package PACKAGE_NAME;
+public enum TaskSymbol {
+    TODO("T"),
+    DEADLINE("D"),
+    EVENT("E");
 
-public class TaskSymbol {
+    private final String symbol;
+
+    TaskSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }
