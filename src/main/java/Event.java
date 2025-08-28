@@ -9,6 +9,14 @@ public class Event extends Task{
         this.symbol = TaskSymbol.EVENT;
     }
 
+    public String getFrom(){
+        return from;
+    }
+
+    public String getTo(){
+        return to;
+    }
+
     @Override
     public String toString() {
         return "[" + symbol.getSymbol()+ "]" + super.toString() + " (from: " + from + " to: "+ to + ")";

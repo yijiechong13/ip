@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.ArrayList;
+
 
 public class Octopus {
     private static final String LINE = "____________________________________________________________";
@@ -25,8 +25,8 @@ public class Octopus {
         greet();
 
         Scanner sc = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
-        int count = 0;
+        Storage storage = new Storage("./data/Octopus.txt");
+        TaskList tasks = new TaskList (storage.load());
 
         while (sc.hasNextLine()) {
             String input = sc.nextLine().trim();
@@ -59,9 +59,10 @@ public class Octopus {
                     //mark as done
                     try {
                         int taskNumber = Integer.parseInt(arguments);
-                        if (taskNumber <= count && taskNumber > 0) {
+                        if (taskNumber <= tasks.size() && taskNumber > 0) {
                             printLine();
                             tasks.get(taskNumber - 1).markDone();
+                            storage.save(tasks.getTasks());
                             System.out.println("Nice! I've marked this task as done:");
                             System.out.println(" " + tasks.get(taskNumber - 1));
                             printLine();
@@ -69,7 +70,7 @@ public class Octopus {
                         } else {
                             printLine();
                             System.out.println("Task number " + taskNumber + " doesn't exist!");
-                            System.out.println("Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                            System.out.println("Now you have " + tasks.size() + (tasks.size() == 1 ? " task in the list." : " tasks in the list."));
                             printLine();
                             break;
                         }
@@ -92,9 +93,10 @@ public class Octopus {
                     //mark as Undone
                     try {
                         int taskNumber = Integer.parseInt(arguments);
-                        if (taskNumber <= count && taskNumber > 0) {
+                        if (taskNumber <= tasks.size() && taskNumber > 0) {
                             printLine();
                             tasks.get(taskNumber - 1).markUndone();
+                            storage.save(tasks.getTasks());
                             System.out.println("OK, I've marked this task as not done yet:");
                             System.out.println(" " + tasks.get(taskNumber - 1));
                             printLine();
@@ -102,7 +104,7 @@ public class Octopus {
                         } else {
                             printLine();
                             System.out.println("Task number " + taskNumber + " doesn't exist!");
-                            System.out.println("Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                            System.out.println("Now you have " + tasks.size() + (tasks.size() == 1 ? " task in the list." : " tasks in the list."));
                             printLine();
                             break;
                         }
@@ -132,11 +134,11 @@ public class Octopus {
                     }
                     Task t = new Todo(arguments);
                     tasks.add(t);
-                    count++;
+                    storage.save(tasks.getTasks());
                     printLine();
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("  " + t);
-                    System.out.println(" Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                    System.out.println(" Now you have " + tasks.size() + (tasks.size()== 1 ? " task in the list." : " tasks in the list."));
                     printLine();
                     break;
                 }
@@ -157,11 +159,11 @@ public class Octopus {
 
                     Task t = new Deadline(desc, by);
                     tasks.add(t);
-                    count++;
+                    storage.save(tasks.getTasks());
                     printLine();
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("  " + t);
-                    System.out.println(" Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                    System.out.println(" Now you have " + tasks.size() + (tasks.size() == 1 ? " task in the list." : " tasks in the list."));
                     printLine();
                     break;
 
@@ -194,11 +196,11 @@ public class Octopus {
 
                     Task t = new Event(desc, from, to);
                     tasks.add(t);
-                    count++;
+                    storage.save(tasks.getTasks());
                     printLine();
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
-                    System.out.println(" Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                    System.out.println(" Now you have " + tasks.size() + (tasks.size() == 1 ? " task in the list." : " tasks in the list."));
                     printLine();
                     break;
                 }
@@ -206,19 +208,18 @@ public class Octopus {
                 case "delete": {
                     try {
                         int taskNumber = Integer.parseInt(arguments);
-                        if (taskNumber <= count && taskNumber > 0) {
+                        if (taskNumber <= tasks.size() && taskNumber > 0) {
                             Task t = tasks.get(taskNumber - 1);
                             System.out.println(" Noted. I've removed this task:");
                             System.out.println(" " + t);
                             tasks.remove(taskNumber - 1);
-                            count--;
-                            System.out.println("Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                            System.out.println("Now you have " + tasks.size() + (tasks.size() == 1 ? " task in the list." : " tasks in the list."));
                             printLine();
                             break;
                         } else {
                             printLine();
                             System.out.println("Task number " + taskNumber + " doesn't exist!");
-                            System.out.println("Now you have " + count + (count == 1 ? " task in the list." : " tasks in the list."));
+                            System.out.println("Now you have " + tasks.size() + (tasks.size() == 1 ? " task in the list." : " tasks in the list."));
                             printLine();
                             break;
                         }

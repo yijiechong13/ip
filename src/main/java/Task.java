@@ -8,6 +8,7 @@ public class Task {
         this.isDone = false;
     }
 
+
     public void markDone() {
         this.isDone = true;
     }

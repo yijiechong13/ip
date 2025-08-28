@@ -7,6 +7,10 @@ public class Deadline extends Task{
         this.symbol = TaskSymbol.DEADLINE;
     }
 
+    public String getBy() {
+        return by;
+    }
+
     @Override
     public String toString() {
         return "[" + symbol.getSymbol() + "]"  + super.toString() + " (by: " + by + ")";
