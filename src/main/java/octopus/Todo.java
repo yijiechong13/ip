@@ -1,4 +1,6 @@
-public class Todo extends Task{
+package octopus;
+
+public class Todo extends Task {
 
     public Todo(String description){
         super(description);

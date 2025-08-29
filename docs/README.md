@@ -1,4 +1,4 @@
-# Octopus User Guide
+# octopus.Octopus User Guide
 
 // Update the title above to match the actual product name
 

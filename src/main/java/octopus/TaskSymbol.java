@@ -1,3 +1,5 @@
+package octopus;
+
 public enum TaskSymbol {
     TODO("T"),
     DEADLINE("D"),

@@ -1,3 +1,5 @@
+package octopus;
+
 public class Parser {
 
     public static class Command {

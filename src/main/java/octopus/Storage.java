@@ -1,3 +1,5 @@
+package octopus;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -65,7 +67,7 @@ public class Storage {
         }
     }
 
-    // parses lines from file into a Task Object
+    // parses lines from file into a octopus.Task Object
     // Example: T | 1 | read book
     //          D | 0 | return book | 2019-12-02 18:00
     //          E | 1 | project meeting | 2019-12-02 14:00 | 2019-12-02 16:00
@@ -85,14 +87,14 @@ public class Storage {
         switch (parts[0]) {
             case "T":
                 if (parts.length != 3) {
-                    throw new IllegalArgumentException("Invalid Todo format: " + line);
+                    throw new IllegalArgumentException("Invalid octopus.Todo format: " + line);
                 }
                 task = new Todo(parts[2]);
                 break;
 
             case "D":
                 if (parts.length != 4) {
-                    throw new IllegalArgumentException("Invalid Deadline format: " + line);
+                    throw new IllegalArgumentException("Invalid octopus.Deadline format: " + line);
                 }
                 LocalDateTime byDateTime = DateTimeParser.parseStoredDateTime(parts[3]);
                 task = new Deadline(parts[2], byDateTime);
@@ -100,7 +102,7 @@ public class Storage {
 
             case "E":
                 if (parts.length != 5) {
-                    throw new IllegalArgumentException("Invalid Event format: " + line);
+                    throw new IllegalArgumentException("Invalid octopus.Event format: " + line);
                 }
                 LocalDateTime fromDateTime = DateTimeParser.parseStoredDateTime(parts[3]);
                 LocalDateTime toDateTime = DateTimeParser.parseStoredDateTime(parts[4]);

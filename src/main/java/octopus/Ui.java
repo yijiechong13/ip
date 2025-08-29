@@ -1,3 +1,5 @@
+package octopus;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -14,7 +16,7 @@ public class Ui {
 
     public void showWelcome() {
         showLine();
-        System.out.println("Hello, welcome to Octopus 🐙!");
+        System.out.println("Hello, welcome to octopus.Octopus 🐙!");
         System.out.println("I'm your chatbot, what can I do for you today?");
         showLine();
     }
@@ -78,7 +80,7 @@ public class Ui {
 
     public void showTaskNotFound(int taskNumber, int totalTasks) {
         showLine();
-        System.out.println("Task number " + taskNumber + " doesn't exist!");
+        System.out.println("octopus.Task number " + taskNumber + " doesn't exist!");
         System.out.println("Now you have " + totalTasks + (totalTasks == 1 ? " task in the list." : " tasks in the list."));
         showLine();
     }
@@ -105,7 +107,7 @@ public class Ui {
 
     public void showTodoUsage() {
         showLine();
-        System.out.println("Todo what?");
+        System.out.println("octopus.Todo what?");
         System.out.println(" Please tell me what you want to do.");
         System.out.println(" Example: todo borrow book");
         showLine();
@@ -113,7 +115,7 @@ public class Ui {
 
     public void showDeadlineUsage() {
         showLine();
-        System.out.println(" Deadline needs a task and a time!");
+        System.out.println(" octopus.Deadline needs a task and a time!");
         System.out.println("  Please enter your deadline using the command \"/by\".");
         System.out.println("  Example: deadline return book /by Tuesday");
         showLine();

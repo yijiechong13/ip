@@ -1,3 +1,5 @@
+package octopus;
+
 public class Octopus {
     private Storage storage;
     private TaskList tasks;
@@ -166,6 +168,6 @@ public class Octopus {
     }
 
     public static void main(String[] args) {
-        new Octopus("./data/Octopus.txt").run();
+        new Octopus("./data/octopus.Octopus.txt").run();
     }
 }
