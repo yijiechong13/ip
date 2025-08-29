@@ -1,19 +1,32 @@
-public class Deadline extends Task{
-    protected String by;
+import java.time.LocalDateTime;
 
-    public Deadline(String description, String by){
+public class Deadline extends Task {
+    protected LocalDateTime by;
+
+    public Deadline(String description, String byString) {
+        super(description);
+        this.by = DateTimeParser.parseDateTime(byString);
+        this.symbol = TaskSymbol.DEADLINE;
+    }
+
+    // Constructor for loading from storage with LocalDateTime
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
         this.symbol = TaskSymbol.DEADLINE;
     }
 
-    public String getBy() {
+    public LocalDateTime getBy() {
         return by;
+    }
+
+    public String getByString() {
+        return by != null ? DateTimeParser.formatForStorage(by) : "";
     }
 
     @Override
     public String toString() {
-        return "[" + symbol.getSymbol() + "]"  + super.toString() + " (by: " + by + ")";
+        String timeDisplay = by != null ? DateTimeParser.formatSmartDisplay(by) : "no deadline";
+        return "[" + symbol.getSymbol() + "]" + super.toString() + " (by: " + timeDisplay + ")";
     }
-
 }

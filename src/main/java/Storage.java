@@ -2,8 +2,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 
 public class Storage {
     private final Path filePath;
@@ -29,7 +29,8 @@ public class Storage {
                         tasks.add(task);
                     }
                 } catch (Exception e) {
-                    System.out.println("Warning: Corrupted data at line " + lineNumber + ":" + line);
+                    System.out.println("Warning: Corrupted data at line " + lineNumber + ": " + line);
+                    System.out.println("Error: " + e.getMessage());
                 }
                 lineNumber++;
             }
@@ -65,48 +66,59 @@ public class Storage {
     }
 
     // parses lines from file into a Task Object
-    // Example : T | 1 | read book
-    //           D | 0 | return book | June 6th
+    // Example: T | 1 | read book
+    //          D | 0 | return book | 2019-12-02 18:00
+    //          E | 1 | project meeting | 2019-12-02 14:00 | 2019-12-02 16:00
     private Task parseTask(String line) {
-        if (line.isEmpty()){
+        if (line.isEmpty()) {
             return null;
         }
 
-        String [] parts = line.split(" \\| ");
+        String[] parts = line.split(" \\| ");
+        if (parts.length < 3) {
+            throw new IllegalArgumentException("Invalid task format: " + line);
+        }
 
         Task task;
+        boolean isDone = parts[1].equals("1");
 
         switch (parts[0]) {
             case "T":
+                if (parts.length != 3) {
+                    throw new IllegalArgumentException("Invalid Todo format: " + line);
+                }
                 task = new Todo(parts[2]);
-                if (parts[2].equals("1")){
-                    task.markDone();
-                } else {
-                    task.markUndone();
-                }
                 break;
+
             case "D":
-                task = new Deadline(parts[2], parts[3]);
-                if (parts[2].equals("1")){
-                    task.markDone();
-                } else {
-                    task.markUndone();
+                if (parts.length != 4) {
+                    throw new IllegalArgumentException("Invalid Deadline format: " + line);
                 }
+                LocalDateTime byDateTime = DateTimeParser.parseStoredDateTime(parts[3]);
+                task = new Deadline(parts[2], byDateTime);
                 break;
+
             case "E":
-                task = new Event (parts[2], parts[3], parts[4]);
-                if (parts[2].equals("1")){
-                    task.markDone();
-                } else {
-                    task.markUndone();
+                if (parts.length != 5) {
+                    throw new IllegalArgumentException("Invalid Event format: " + line);
                 }
+                LocalDateTime fromDateTime = DateTimeParser.parseStoredDateTime(parts[3]);
+                LocalDateTime toDateTime = DateTimeParser.parseStoredDateTime(parts[4]);
+                task = new Event(parts[2], fromDateTime, toDateTime);
                 break;
+
             default:
                 throw new IllegalArgumentException("Unknown task type: " + parts[0]);
         }
 
-        return task;
+        // Set the completion status
+        if (isDone) {
+            task.markDone();
+        } else {
+            task.markUndone();
+        }
 
+        return task;
     }
 
     private String taskFormatToStore(Task task) {
@@ -116,14 +128,15 @@ public class Storage {
             return "T | " + status + " | " + task.description;
         } else if (task instanceof Deadline) {
             Deadline deadline = (Deadline) task;
-            return "D | " + status + " | " + task.description + " | " + deadline.getBy();
+            String byString = deadline.getByString();
+            return "D | " + status + " | " + task.description + " | " + byString;
         } else if (task instanceof Event) {
             Event event = (Event) task;
-            return "E | " + status + " | " + task.description + " | " + event.getFrom() + " | " + event.getTo();
+            String fromString = event.getFromString();
+            String toString = event.getToString();
+            return "E | " + status + " | " + task.description + " | " + fromString + " | " + toString;
         } else {
             return "";
         }
     }
-
 }
-

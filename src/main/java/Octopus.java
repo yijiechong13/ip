@@ -213,6 +213,7 @@ public class Octopus {
                             System.out.println(" Noted. I've removed this task:");
                             System.out.println(" " + t);
                             tasks.remove(taskNumber - 1);
+                            storage.save(tasks.getTasks());
                             System.out.println("Now you have " + tasks.size() + (tasks.size() == 1 ? " task in the list." : " tasks in the list."));
                             printLine();
                             break;

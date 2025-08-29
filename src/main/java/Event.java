@@ -1,25 +1,44 @@
-public class Event extends Task{
-    protected String from;
-    protected String to;
+import java.time.LocalDateTime;
 
-    public Event(String description, String from, String to){
+public class Event extends Task {
+    protected LocalDateTime from;
+    protected LocalDateTime to;
+
+    public Event(String description, String fromString, String toString) {
+        super(description);
+        this.from = DateTimeParser.parseDateTime(fromString);
+        this.to = DateTimeParser.parseDateTime(toString);
+        this.symbol = TaskSymbol.EVENT;
+    }
+
+    // Constructor for loading from storage with LocalDateTime
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         this.from = from;
         this.to = to;
         this.symbol = TaskSymbol.EVENT;
     }
 
-    public String getFrom(){
+    public LocalDateTime getFrom() {
         return from;
     }
 
-    public String getTo(){
+    public LocalDateTime getTo() {
         return to;
+    }
+
+    public String getFromString() {
+        return from != null ? DateTimeParser.formatForStorage(from) : "";
+    }
+
+    public String getToString() {
+        return to != null ? DateTimeParser.formatForStorage(to) : "";
     }
 
     @Override
     public String toString() {
-        return "[" + symbol.getSymbol()+ "]" + super.toString() + " (from: " + from + " to: "+ to + ")";
+        String fromDisplay = from != null ? DateTimeParser.formatSmartDisplay(from) : "?";
+        String toDisplay = to != null ? DateTimeParser.formatSmartDisplay(to) : "?";
+        return "[" + symbol.getSymbol() + "]" + super.toString() + " (from: " + fromDisplay + " to: " + toDisplay + ")";
     }
-
 }
