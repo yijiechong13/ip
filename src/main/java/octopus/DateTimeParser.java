@@ -263,8 +263,7 @@ public class DateTimeParser {
      * Check if input contains only time (no date)
      */
     public static boolean isTimeOnly(String input) {
-        return input != null && !DATE_PATTERN.matcher(input).find() &&
-                !input.matches("\\d{4}-\\d{2}-\\d{2}.*") && parseTime(input) != null;
+        return input != null && !DATE_PATTERN.matcher(input).find() && !input.matches("\\d{4}-\\d{2}-\\d{2}.*") && parseTime(input) != null;
     }
 
     /**

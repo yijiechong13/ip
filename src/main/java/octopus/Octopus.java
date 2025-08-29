@@ -1,4 +1,3 @@
-
 package octopus;
 
 public class Octopus {
@@ -36,42 +35,42 @@ public class Octopus {
         String arguments = command.getArguments();
 
         switch (commandWord) {
-            case "bye":
-                ui.showGoodbye();
-                System.exit(0);
-                break;
+        case "bye":
+            ui.showGoodbye();
+            System.exit(0);
+            break;
 
-            case "list":
-                ui.showTaskList(tasks);
-                break;
+        case "list":
+            ui.showTaskList(tasks);
+            break;
 
-            case "mark":
-                handleMark(arguments);
-                break;
+        case "mark":
+            handleMark(arguments);
+            break;
 
-            case "unmark":
-                handleUnmark(arguments);
-                break;
+        case "unmark":
+            handleUnmark(arguments);
+            break;
 
-            case "todo":
-                handleTodo(arguments);
-                break;
+        case "todo":
+            handleTodo(arguments);
+            break;
 
-            case "deadline":
-                handleDeadline(arguments);
-                break;
+        case "deadline":
+            handleDeadline(arguments);
+            break;
 
-            case "event":
-                handleEvent(arguments);
-                break;
+        case "event":
+            handleEvent(arguments);
+            break;
 
-            case "delete":
-                handleDelete(arguments);
-                break;
+        case "delete":
+            handleDelete(arguments);
+            break;
 
-            default:
-                ui.showUnknownCommand();
-                break;
+        default:
+            ui.showUnknownCommand();
+            break;
         }
     }
 

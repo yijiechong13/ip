@@ -85,32 +85,32 @@ public class Storage {
         boolean isDone = parts[1].equals("1");
 
         switch (parts[0]) {
-            case "T":
-                if (parts.length != 3) {
-                    throw new IllegalArgumentException("Invalid octopus.Todo format: " + line);
-                }
-                task = new Todo(parts[2]);
-                break;
+        case "T":
+            if (parts.length != 3) {
+                throw new IllegalArgumentException("Invalid octopus.Todo format: " + line);
+            }
+            task = new Todo(parts[2]);
+            break;
 
-            case "D":
-                if (parts.length != 4) {
-                    throw new IllegalArgumentException("Invalid octopus.Deadline format: " + line);
-                }
-                LocalDateTime byDateTime = DateTimeParser.parseStoredDateTime(parts[3]);
-                task = new Deadline(parts[2], byDateTime);
-                break;
+        case "D":
+            if (parts.length != 4) {
+                throw new IllegalArgumentException("Invalid octopus.Deadline format: " + line);
+            }
+            LocalDateTime byDateTime = DateTimeParser.parseStoredDateTime(parts[3]);
+            task = new Deadline(parts[2], byDateTime);
+            break;
 
-            case "E":
-                if (parts.length != 5) {
-                    throw new IllegalArgumentException("Invalid octopus.Event format: " + line);
-                }
-                LocalDateTime fromDateTime = DateTimeParser.parseStoredDateTime(parts[3]);
-                LocalDateTime toDateTime = DateTimeParser.parseStoredDateTime(parts[4]);
-                task = new Event(parts[2], fromDateTime, toDateTime);
-                break;
+        case "E":
+            if (parts.length != 5) {
+                throw new IllegalArgumentException("Invalid octopus.Event format: " + line);
+            }
+            LocalDateTime fromDateTime = DateTimeParser.parseStoredDateTime(parts[3]);
+            LocalDateTime toDateTime = DateTimeParser.parseStoredDateTime(parts[4]);
+            task = new Event(parts[2], fromDateTime, toDateTime);
+            break;
 
-            default:
-                throw new IllegalArgumentException("Unknown task type: " + parts[0]);
+        default:
+            throw new IllegalArgumentException("Unknown task type: " + parts[0]);
         }
 
         // Set the completion status
