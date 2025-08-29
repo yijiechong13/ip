@@ -1,3 +1,4 @@
+
 package octopus;
 
 public class Octopus {
