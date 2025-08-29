@@ -188,6 +188,25 @@ public class DateTimeParser {
     }
 
     /**
+     * Format for display when user explicitly provided a date
+     * Always shows full date and time: "Aug 29 2025 6pm"
+     */
+    public static String formatExplicitDisplay(LocalDateTime dateTime) {
+        if (dateTime == null) {
+            return "";
+        }
+
+        LocalTime time = dateTime.toLocalTime();
+        String dateStr = dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+
+        if (time.getMinute() == 0) {
+            return dateStr + " " + dateTime.format(DateTimeFormatter.ofPattern("ha")).toLowerCase();
+        } else {
+            return dateStr + " " + dateTime.format(DateTimeFormatter.ofPattern("h:mma")).toLowerCase();
+        }
+    }
+
+    /**
      * Smart format for display - shows date only if not today
      * Today: "3pm"
      * Other dates: "Aug 30 2025 3pm"
@@ -205,7 +224,14 @@ public class DateTimeParser {
             return formatTimeForDisplay(dateTime);
         } else {
             // Show full date and time if it's not today
-            return formatForDisplay(dateTime);
+            LocalTime time = dateTime.toLocalTime();
+            String dateStr = dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+
+            if (time.getMinute() == 0) {
+                return dateStr + " " + dateTime.format(DateTimeFormatter.ofPattern("ha")).toLowerCase();
+            } else {
+                return dateStr + " " + dateTime.format(DateTimeFormatter.ofPattern("h:mma")).toLowerCase();
+            }
         }
     }
 
