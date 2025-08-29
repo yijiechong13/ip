@@ -7,13 +7,28 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * Handles file storage operations for tasks in the Octopus application.
+ * Manages loading tasks from and saving tasks to persistent storage.
+ */
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Creates a new Storage instance with the specified file path.
+     *
+     * @param filePath the path to the storage file
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * Creates the file if it doesn't exist and returns an empty list.
+     *
+     * @return a list of tasks loaded from the file
+     */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
         if (!Files.exists(filePath)) {
@@ -42,6 +57,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the given list of tasks to the storage file.
+     *
+     * @param tasks the list of tasks to save
+     */
     public void save(ArrayList<Task> tasks) {
         createFolderAndFile();
         try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(filePath))) {

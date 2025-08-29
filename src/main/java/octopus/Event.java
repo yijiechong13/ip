@@ -2,10 +2,21 @@ package octopus;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents an event task with start and end times.
+ * Extends the basic Task class to include time range functionality.
+ */
 public class Event extends Task {
     protected LocalDateTime from;
     protected LocalDateTime to;
 
+    /**
+     * Creates a new event task with the given description and time range.
+     *
+     * @param description the description of the event
+     * @param fromString the start time as a string
+     * @param toString the end time as a string
+     */
     public Event(String description, String fromString, String toString) {
         super(description);
         this.from = DateTimeParser.parseDateTime(fromString);
