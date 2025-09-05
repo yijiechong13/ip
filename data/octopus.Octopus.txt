@@ -1,0 +1,2 @@
+T | 1 | borrow book
+D | 0 | return book | 2025-09-05 22:00

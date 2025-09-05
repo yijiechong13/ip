@@ -16,7 +16,7 @@ public class Ui {
 
     public void showWelcome() {
         showLine();
-        System.out.println("Hello, welcome to octopus.Octopus 🐙!");
+        System.out.println("Hello, welcome to Octopus 🐙!");
         System.out.println("I'm your chatbot, what can I do for you today?");
         showLine();
     }
