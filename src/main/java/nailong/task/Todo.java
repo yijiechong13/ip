@@ -1,5 +1,9 @@
-package Nailong.task;
+package nailong.task;
 
+/**
+ * Represents a todo task without any time constraints.
+ * A <code>Todo</code> object corresponds to a simple task with just a description.
+ */
 public class Todo extends Task {
 
     /**
@@ -7,7 +11,7 @@ public class Todo extends Task {
      *
      * @param description Description of the todo task.
      */
-    public Todo (String description) {
+    public Todo(String description) {
         super(description);
     }
 

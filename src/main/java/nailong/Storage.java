@@ -1,14 +1,19 @@
-package Nailong;
-import java.io.*;
+package nailong;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import Nailong.task.Deadline;
-import Nailong.task.Event;
-import Nailong.task.Task;
-import Nailong.task.Todo;
+
+import nailong.task.Deadline;
+import nailong.task.Event;
+import nailong.task.Task;
+import nailong.task.Todo;
 
 class Storage {
     private final Path filePath;
@@ -105,7 +110,7 @@ class Storage {
 
         case "D":
             String by = parts[3];
-            task = new Deadline(description,by);
+            task = new Deadline(description, by);
             if (status.equals("1")) {
                 task.markDone();
             } else {
@@ -123,6 +128,7 @@ class Storage {
                 task.markUndone();
             }
             break;
+        default:
         }
         return task;
     }

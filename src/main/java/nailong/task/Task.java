@@ -1,13 +1,19 @@
-package Nailong.task;
+package nailong.task;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.time.LocalDate;
 
+
+/**
+ * Represents a generic task with a description and completion status.
+ * A <code>Task</code> object corresponds to a basic task that can be marked as done or undone.
+ * This serves as the base class for more specific task types.
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
-    private final Pattern PATTERN = Pattern.compile("\\d{1,2}/\\d{1,2}/\\d{4}");
+    private final Pattern PatternRegex = Pattern.compile("\\d{1,2}/\\d{1,2}/\\d{4}");
     private Matcher matcher;
 
     /**
@@ -63,7 +69,7 @@ public class Task {
      * @return Reformatted date string or empty string if no valid date found.
      */
     public String reformatDate(String time) {
-        matcher = PATTERN.matcher(time);
+        matcher = PatternRegex.matcher(time);
         LocalDate localDate = null;
         boolean matchFound = matcher.find();
         String formattedDate = "";

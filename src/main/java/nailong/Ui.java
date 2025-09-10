@@ -1,8 +1,14 @@
-package Nailong;
+package nailong;
 
 import java.util.ArrayList;
-import Nailong.task.Task;
 
+import nailong.task.Task;
+
+/**
+ * Handles all user interface interactions for the Nailong application.
+ * A <code>Ui</code> object manages the display of messages, task lists,
+ * and user feedback through the console interface.
+ */
 public class Ui {
     private static final String LINE = "____________________________________________________________";
 
@@ -59,7 +65,8 @@ public class Ui {
         showLine();
         System.out.println(" Got it. I've added this task:");
         System.out.println("  " + task);
-        System.out.println(" Now you have " + totalTasks + (totalTasks == 1 ? " task in the list." : " tasks in the list."));
+        System.out.println(" Now you have " + totalTasks
+                + (totalTasks == 1 ? " task in the list." : " tasks in the list."));
         showLine();
     }
 
@@ -73,7 +80,8 @@ public class Ui {
         showLine();
         System.out.println(" Noted. I've removed this task:");
         System.out.println(" " + task);
-        System.out.println("Now you have " + remainingTasks + (remainingTasks == 1 ? " task in the list." : " tasks in the list."));
+        System.out.println("Now you have " + remainingTasks
+                + (remainingTasks == 1 ? " task in the list." : " tasks in the list."));
         showLine();
     }
 

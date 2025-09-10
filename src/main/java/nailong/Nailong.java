@@ -1,12 +1,17 @@
-package Nailong;
-import java.util.Scanner;
+package nailong;
 import java.util.ArrayList;
-import java.lang.StringIndexOutOfBoundsException;
-import Nailong.task.Deadline;
-import Nailong.task.Event;
-import Nailong.task.Task;
-import Nailong.task.Todo;
+import java.util.Scanner;
 
+import nailong.task.Deadline;
+import nailong.task.Event;
+import nailong.task.Task;
+import nailong.task.Todo;
+
+/**
+ * Main class for the Nailong task management application.
+ * A <code>Nailong</code> object represents the chatbot that handles user commands
+ * for managing tasks including todos, deadlines, and events.
+ */
 public class Nailong {
     private static TaskList tasks;
     private final Storage storage;

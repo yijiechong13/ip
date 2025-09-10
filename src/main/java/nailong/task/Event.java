@@ -1,5 +1,9 @@
-package Nailong.task;
+package nailong.task;
 
+/**
+ * Represents an event task with start and end times.
+ * An <code>Event</code> object corresponds to a task that occurs within a specific time period.
+ */
 public class Event extends Task {
 
     protected String from;
@@ -14,7 +18,7 @@ public class Event extends Task {
      * @param from Start date/time of the event.
      * @param to End date/time of the event.
      */
-    public Event (String description, String from, String to) {
+    public Event(String description, String from, String to) {
         super(description);
         this.from = from;
         this.to = to;
@@ -31,7 +35,8 @@ public class Event extends Task {
     @Override
     public String formatToStore() {
         String status = isDone ? "1" : "0";
-        return "E | " + status + " | " + this.description + " | " + this.reformatStartTime + " | " + this.reformatEndTime;
+        return "E | " + status + " | " + this.description
+                + " | " + this.reformatStartTime + " | " + this.reformatEndTime;
     }
 
     @Override

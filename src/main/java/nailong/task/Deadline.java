@@ -1,5 +1,9 @@
-package Nailong.task;
+package nailong.task;
 
+/**
+ * Represents a task with a deadline.
+ * A <code>Deadline</code> object corresponds to a task that must be completed by a specific date/time.
+ */
 public class Deadline extends Task {
     protected String by;
     protected String reformatDeadline;

@@ -1,6 +1,8 @@
-package Nailong;
+package nailong;
+
 import java.util.ArrayList;
-import Nailong.task.Task;
+
+import nailong.task.Task;
 
 class TaskList {
     private final ArrayList<Task> tasks;
