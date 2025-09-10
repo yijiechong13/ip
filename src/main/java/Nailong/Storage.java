@@ -1,10 +1,14 @@
-package octopus;
+package Nailong;
 import java.io.*;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import Nailong.task.Deadline;
+import Nailong.task.Event;
+import Nailong.task.Task;
+import Nailong.task.Todo;
 
 class Storage {
     private final Path filePath;
@@ -13,6 +17,12 @@ class Storage {
         this.filePath = Paths.get(filePath);
     }
 
+    /**
+     * Saves all tasks from the task list to the storage file.
+     * Creates the necessary directories and file if they don't exist.
+     *
+     * @param taskList TaskList containing tasks to be saved.
+     */
     public void save(TaskList taskList) {
         createFolderAndFile();
         try {
@@ -30,6 +40,13 @@ class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * If the file doesn't exist, creates it and returns an empty task list.
+     * Handles corrupted data by skipping invalid lines and displaying warnings.
+     *
+     * @return ArrayList of tasks loaded from the file.
+     */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
         if (!Files.exists(filePath)) {
@@ -58,6 +75,13 @@ class Storage {
         return tasks;
     }
 
+    /**
+     * Parses a line from the storage file and creates the corresponding Task object.
+     * Supports Todo (T), Deadline (D), and Event (E) task types.
+     *
+     * @param line Line from the storage file to parse.
+     * @return Parsed Task object, or null if the line is empty or invalid.
+     */
     public Task parseTask(String line) {
         if (line.isEmpty()) {
             return null;
@@ -103,7 +127,10 @@ class Storage {
         return task;
     }
 
-
+    /**
+     * Creates the necessary parent directories and file if they don't exist.
+     * This method ensures the storage file path is ready for read/write operations.
+     */
     public void createFolderAndFile() {
         try {
             Path parentPath = filePath.getParent(); // check if ./data folder exists

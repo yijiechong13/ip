@@ -1,6 +1,7 @@
-package octopus;
+package Nailong;
 
 import java.util.ArrayList;
+import Nailong.task.Task;
 
 public class Ui {
     private static final String LINE = "____________________________________________________________";
@@ -8,23 +9,37 @@ public class Ui {
     public Ui() {
     }
 
+    /**
+     * Displays a separator line in the console.
+     */
     public void showLine() {
         System.out.println(LINE);
     }
 
+    /**
+     * Displays the welcome message when the application starts.
+     */
     public void showWelcome() {
         showLine();
-        System.out.println("Hello, I'm your chatbot Octopus \uD83D\uDC19! ");
+        System.out.println("Hello, I'm your chatbot Nailong \uD83C\uDF3B\uD83D\uDC9B! ");
         System.out.println("What can I do for you?");
         showLine();
     }
 
+    /**
+     * Displays the goodbye message when the application terminates.
+     */
     public void showGoodbye() {
         showLine();
         System.out.println("Bye. Hope to see you again soon!");
         showLine();
     }
 
+    /**
+     * Displays all tasks in the provided task list.
+     *
+     * @param tasks TaskList containing tasks to display.
+     */
     public void showTaskList(TaskList tasks) {
         showLine();
         System.out.println("Here are the tasks in your list:");
@@ -34,6 +49,12 @@ public class Ui {
         showLine();
     }
 
+    /**
+     * Displays confirmation message when a task is successfully added.
+     *
+     * @param task Task that was added.
+     * @param totalTasks Total number of tasks after addition.
+     */
     public void showTaskAdded(Task task, int totalTasks) {
         showLine();
         System.out.println(" Got it. I've added this task:");
@@ -42,6 +63,12 @@ public class Ui {
         showLine();
     }
 
+    /**
+     * Displays confirmation message when a task is successfully deleted.
+     *
+     * @param task Task that was deleted.
+     * @param remainingTasks Number of tasks remaining after deletion.
+     */
     public void showTaskDeleted(Task task, int remainingTasks) {
         showLine();
         System.out.println(" Noted. I've removed this task:");
@@ -50,6 +77,9 @@ public class Ui {
         showLine();
     }
 
+    /**
+     * Displays error message for unknown commands and shows available commands.
+     */
     public void showUnknownCommand() {
         showLine();
         System.out.println("I don't understand that command!");
@@ -57,20 +87,41 @@ public class Ui {
         showLine();
     }
 
+    /**
+     * Displays confirmation message when a task is marked as done.
+     *
+     * @param task Task that was marked as completed.
+     */
     public void showTaskMarked(Task task) {
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(" " + task);
     }
 
+    /**
+     * Displays confirmation message when a task is marked as undone.
+     *
+     * @param task Task that was marked as incomplete.
+     */
     public void showTaskUnmarked(Task task) {
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(" " + task);
     }
 
+    /**
+     * Displays the specified error message.
+     *
+     * @param errorMessage Error message to display.
+     */
     public void showError(String errorMessage) {
         System.out.println(errorMessage);
     }
 
+    /**
+     * Displays the results of a find operation.
+     * Shows matching tasks or a message if no matches are found.
+     *
+     * @param matchingTasks ArrayList of tasks that match the search criteria.
+     */
     public void showFindResults(ArrayList<Task> matchingTasks) {
         if (!matchingTasks.isEmpty()) {
             System.out.println("Here are the matching tasks in your list: ");

@@ -1,32 +1,41 @@
-package octopus;
+package Nailong.task;
 
-class Event extends Task {
+public class Event extends Task {
 
     protected String from;
     protected String to;
+    protected String reformatStartTime;
+    protected String reformatEndTime;
 
+    /**
+     * Constructs a new Event task with the specified description, start time, and end time.
+     *
+     * @param description Description of the event.
+     * @param from Start date/time of the event.
+     * @param to End date/time of the event.
+     */
     public Event (String description, String from, String to) {
         super(description);
         this.from = from;
         this.to = to;
+        this.reformatStartTime = super.reformatDate(from);
+        this.reformatEndTime = super.reformatDate(to);
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
+    /**
+     * Returns the formatted string for storing the event task to file.
+     * Format: "E | status | description | startTime | endTime"
+     *
+     * @return Formatted string for file storage.
+     */
     @Override
     public String formatToStore() {
         String status = isDone ? "1" : "0";
-        return "E | " + status + " | " + this.description + " | " + this.from + " | " + this.to;
+        return "E | " + status + " | " + this.description + " | " + this.reformatStartTime + " | " + this.reformatEndTime;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from: " + reformatStartTime + " to: " + reformatEndTime + ")";
     }
 }

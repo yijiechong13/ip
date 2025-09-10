@@ -1,19 +1,33 @@
-package octopus;
+package Nailong;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.lang.StringIndexOutOfBoundsException;
+import Nailong.task.Deadline;
+import Nailong.task.Event;
+import Nailong.task.Task;
+import Nailong.task.Todo;
 
-public class Octopus {
+public class Nailong {
     private static TaskList tasks;
     private final Storage storage;
     private final Ui ui;
 
-    public Octopus (String filePath) {
+    /**
+     * Constructs a new Nailong chatbot with the specified storage file path.
+     *
+     * @param filePath Path to the file where tasks will be stored.
+     */
+    public Nailong(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
     }
 
+    /**
+     * Marks the task at the specified index as completed.
+     *
+     * @param index Index of the task to mark as done (0-based).
+     */
     public void markDone(int index) {
         if (index < 0 || index >= tasks.getTaskListSize()) {
             ui.showError("Invalid task number!");
@@ -24,6 +38,11 @@ public class Octopus {
         ui.showTaskMarked(task);
     }
 
+    /**
+     * Marks the task at the specified index as not completed.
+     *
+     * @param index Index of the task to mark as undone (0-based).
+     */
     public void markUndone(int index) {
         if (index < 0 || index >= tasks.getTaskListSize()) {
             ui.showError("Invalid task number!");
@@ -34,6 +53,11 @@ public class Octopus {
         ui.showTaskUnmarked(task);
     }
 
+    /**
+     * Handles the mark command from user input.
+     *
+     * @param parts Array containing the command and task number.
+     */
     private void handleMarkCommand(String[] parts) {
         try {
             int index = Integer.parseInt(parts[1]) - 1;
@@ -46,6 +70,11 @@ public class Octopus {
         }
     }
 
+    /**
+     * Handles the unmark command from user input.
+     *
+     * @param parts Array containing the command and task number.
+     */
     private void handleUnmarkCommand(String[] parts) {
         try {
             int index = Integer.parseInt(parts[1]) - 1;
@@ -60,6 +89,12 @@ public class Octopus {
         }
     }
 
+    /**
+     * Handles the todo command from user input.
+     * Creates and adds a new Todo task.
+     *
+     * @param input Full command string containing todo description.
+     */
     private void handleTodoCommand(String input) {
         try {
             String description = input.substring(5).trim();
@@ -79,6 +114,12 @@ public class Octopus {
         }
     }
 
+    /**
+     * Handles the deadline command from user input.
+     * Creates and adds a new Deadline task.
+     *
+     * @param input Full command string containing deadline description and due date.
+     */
     private void handleDeadlineCommand(String input) {
         if (!input.contains("/by")) {
             ui.showError("Invalid format! Use: deadline <description> /by <date/time> ");
@@ -103,6 +144,12 @@ public class Octopus {
         }
     }
 
+    /**
+     * Handles the event command from user input.
+     * Creates and adds a new Event task.
+     *
+     * @param input Full command string containing event description, start, and end times.
+     */
     private void handleEventCommand(String input) {
         if (!input.contains("/from") || !input.contains("/to")) {
             ui.showError("Invalid format! Use: event <description> /from <start> /to <end>");
@@ -138,9 +185,13 @@ public class Octopus {
         } catch (Exception e) {
             ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
         }
-        ui.showLine();
     }
 
+    /**
+     * Handles the delete command from user input.
+     *
+     * @param parts Array containing the command and task number.
+     */
     private void handleDeleteCommand(String[] parts) {
         try {
             int index = Integer.parseInt(parts[1]) - 1;
@@ -152,6 +203,12 @@ public class Octopus {
         }
     }
 
+    /**
+     * Handles the find command from user input.
+     * Searches for tasks containing the specified keyword.
+     *
+     * @param parts Array containing the command and search keyword.
+     */
     private void handleFindCommand(String[] parts) {
         String subString = parts[1];
         ArrayList<Task> tempList = new ArrayList<>();
@@ -164,6 +221,10 @@ public class Octopus {
         ui.showLine();
     }
 
+    /**
+     * Runs the main application loop.
+     * Processes user commands until the user types "bye".
+     */
     public void run() {
         ui.showWelcome();
         Scanner sc = new Scanner(System.in);
@@ -217,7 +278,12 @@ public class Octopus {
         }
     }
 
+    /**
+     * Main method to start the Nailong application.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
-        new Octopus("./data/octopus.Octopus.txt").run();
+        new Nailong("./data/Nailong.txt").run();
     }
 }

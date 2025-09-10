@@ -1,11 +1,22 @@
-package octopus;
+package Nailong.task;
 
-class Todo extends Task {
+public class Todo extends Task {
 
+    /**
+     * Constructs a new Todo task with the specified description.
+     *
+     * @param description Description of the todo task.
+     */
     public Todo (String description) {
         super(description);
     }
 
+    /**
+     * Returns the formatted string for storing the todo task to file.
+     * Format: "T | status | description"
+     *
+     * @return Formatted string for file storage.
+     */
     @Override
     public String formatToStore() {
         String status = isDone ? "1" : "0";
