@@ -44,6 +44,18 @@ public class Ui {
     }
 
     /**
+     * Helper method to format task count message.
+     * Eliminates code duplication between showTaskAdded and showTaskDeleted.
+     *
+     * @param count Number of tasks.
+     * @return Formatted string with proper singular/plural form.
+     */
+    private String formatTaskCount(int count) {
+        return count + (count == 1 ? " task in the list." : " tasks in the list.");
+    }
+
+
+    /**
      * Displays confirmation message when a task is successfully added.
      *
      * @param task Task that was added.
@@ -53,8 +65,7 @@ public class Ui {
         StringBuilder sb = new StringBuilder();
         sb.append(" Got it. I've added this task:").append("\n");
         sb.append("  " + task).append("\n");
-        sb.append(" Now you have " + totalTasks
-                + (totalTasks == 1 ? " task in the list." : " tasks in the list."));
+        sb.append(" Now you have " + formatTaskCount(totalTasks));
         return sb.toString();
     }
 
@@ -68,8 +79,7 @@ public class Ui {
         StringBuilder sb = new StringBuilder();
         sb.append(" Noted. I've removed this task:").append("\n");
         sb.append(" " + task).append("\n");
-        sb.append("Now you have " + remainingTasks
-                + (remainingTasks == 1 ? " task in the list." : " tasks in the list."));
+        sb.append("Now you have " + formatTaskCount(remainingTasks));
         return sb.toString();
     }
 

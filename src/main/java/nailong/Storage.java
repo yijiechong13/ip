@@ -81,6 +81,21 @@ class Storage {
     }
 
     /**
+     * Helper method to set task status based on status string.
+     * Eliminates code duplication in parseTask method.
+     *
+     * @param task Task object to set status for.
+     * @param status Status string ("1" for done, "0" for undone).
+     */
+    private void setTaskStatus(Task task, String status) {
+        if (status.equals("1")) {
+            task.markDone();
+        } else {
+            task.markUndone();
+        }
+    }
+
+    /**
      * Parses a line from the storage file and creates the corresponding Task object.
      * Supports Todo (T), Deadline (D), and Event (E) task types.
      *
@@ -100,35 +115,26 @@ class Storage {
         switch (taskType) {
         case "T":
             task = new Todo(description);
-            if (status.equals("1")) {
-                task.markDone();
-            } else {
-                task.markUndone();
-            }
             break;
 
         case "D":
             String by = parts[3];
             task = new Deadline(description, by);
-            if (status.equals("1")) {
-                task.markDone();
-            } else {
-                task.markUndone();
-            }
             break;
 
         case "E":
             String from = parts[3];
             String to = parts[4];
             task = new Event(description, from, to);
-            if (status.equals("1")) {
-                task.markDone();
-            } else {
-                task.markUndone();
-            }
             break;
+
         default:
+            System.out.println("Warning: Unknown task type '" + taskType + "' in line: " + line);
+            return null;
         }
+
+        // Set status for all task types in one place
+        setTaskStatus(task, status);
         return task;
     }
 

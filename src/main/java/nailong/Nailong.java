@@ -12,6 +12,12 @@ import nailong.task.Todo;
  * for managing tasks including todos, deadlines, and events.
  */
 public class Nailong {
+    // Constants to replace magic numbers
+    private static final int TODO_COMMAND_LENGTH = 5;
+    private static final int DEADLINE_COMMAND_LENGTH = 9;
+    private static final int EVENT_COMMAND_LENGTH = 6;
+    private static final int EXPECTED_EVENT_PARTS_COUNT = 3;
+
     private TaskList tasks;
     private final Storage storage;
     private final Ui ui;
@@ -26,6 +32,42 @@ public class Nailong {
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
     }
+
+    /**
+     * Helper method to validate and parse task index from command parts.
+     * Eliminates code duplication in mark, unmark, and delete commands.
+     *
+     * @param parts Array containing the command and task number.
+     * @param commandName Name of the command for error message.
+     * @return Valid task index (0-based) or -1 if invalid.
+     */
+    private int parseTaskIndex(String[] parts, String commandName) {
+        try {
+            int index = Integer.parseInt(parts[1]) - 1;
+            if (index < 0 || index >= tasks.getTaskListSize()) {
+                return -1; // Invalid range
+            }
+            return index;
+        } catch (Exception e) {
+            return -2; // Parse error
+        }
+    }
+
+    /**
+     * Helper method to get appropriate error message for task index validation.
+     *
+     * @param errorCode Error code from parseTaskIndex (-1 for range, -2 for format).
+     * @param commandName Name of the command for error message.
+     * @return Appropriate error message.
+     */
+    private String getIndexErrorMessage(int errorCode, String commandName) {
+        if (errorCode == -1) {
+            return ui.showError("Invalid task number!");
+        } else {
+            return ui.showError("Invalid format! Use: " + commandName + " <number>");
+        }
+    }
+
 
     /**
      * Processes a single user input and returns the appropriate response.
@@ -77,18 +119,15 @@ public class Nailong {
      * @param parts Array containing the command and task number.
      */
     private String handleMarkCommand(String[] parts) {
-        try {
-            int index = Integer.parseInt(parts[1]) - 1;
-            if (index < 0 || index >= tasks.getTaskListSize()) {
-                return ui.showError("Invalid task number!");
-            }
-            Task task = tasks.getTask(index);
-            task.markDone();
-            storage.save(tasks);
-            return ui.showTaskMarked(task);
-        } catch (Exception e) {
-            return ui.showError("Invalid format! Use: mark <number>");
+        int index = parseTaskIndex(parts, "mark");
+        if (index < 0) {
+            return getIndexErrorMessage(index, "mark");
         }
+
+        Task task = tasks.getTask(index);
+        task.markDone();
+        storage.save(tasks);
+        return ui.showTaskMarked(task);
     }
 
     /**
@@ -97,18 +136,15 @@ public class Nailong {
      * @param parts Array containing the command and task number.
      */
     private String handleUnmarkCommand(String[] parts) {
-        try {
-            int index = Integer.parseInt(parts[1]) - 1;
-            if (index < 0 || index >= tasks.getTaskListSize()) {
-                return ui.showError("Invalid task number!");
-            }
-            Task task = tasks.getTask(index);
-            task.markUndone();
-            storage.save(tasks);
-            return ui.showTaskUnmarked(task);
-        } catch (Exception e) {
-            return ui.showError("Invalid format! Use: unmark <number>");
+        int index = parseTaskIndex(parts, "unmark");
+        if (index < 0) {
+            return getIndexErrorMessage(index, "unmark");
         }
+
+        Task task = tasks.getTask(index);
+        task.markUndone();
+        storage.save(tasks);
+        return ui.showTaskUnmarked(task);
     }
 
     /**
@@ -119,7 +155,7 @@ public class Nailong {
      */
     private String handleTodoCommand(String input) {
         try {
-            String description = input.substring(5).trim();
+            String description = input.substring(TODO_COMMAND_LENGTH).trim();
 
             if (description.isEmpty()) {
                 return ui.showError("Invalid format! Use: todo <description>");
@@ -145,7 +181,7 @@ public class Nailong {
             return ui.showError("Invalid format! Use: deadline <description> /by <date/time> ");
         }
         try {
-            String description = input.substring(9).trim();
+            String description = input.substring(DEADLINE_COMMAND_LENGTH).trim();
 
             if (description.isEmpty()) {
                 return ui.showError("Invalid format! Use: deadline <description> /by <date/time>");
@@ -175,14 +211,14 @@ public class Nailong {
         }
 
         try {
-            String description = input.substring(6).trim();
+            String description = input.substring(EVENT_COMMAND_LENGTH).trim();
 
             if (description.isEmpty()) {
                 return ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
             } else {
                 String[] eventParts = description.split("/from |/to ");
 
-                if (eventParts.length < 3) {
+                if (eventParts.length < EXPECTED_EVENT_PARTS_COUNT) {
                     return ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
                 } else {
                     String desc = eventParts[0].trim();
@@ -211,17 +247,14 @@ public class Nailong {
      * @param parts Array containing the command and task number.
      */
     private String handleDeleteCommand(String[] parts) {
-        try {
-            int index = Integer.parseInt(parts[1]) - 1;
-            if (index < 0 || index >= tasks.getTaskListSize()) {
-                return ui.showError("Invalid task number!");
-            }
-            Task task = tasks.removeTask(index);
-            storage.save(tasks);
-            return ui.showTaskDeleted(task, tasks.getTaskListSize());
-        } catch (Exception e) {
-            return ui.showError("Invalid format! Use: delete <number>");
+        int index = parseTaskIndex(parts, "delete");
+        if (index < 0) {
+            return getIndexErrorMessage(index, "delete");
         }
+
+        Task task = tasks.removeTask(index);
+        storage.save(tasks);
+        return ui.showTaskDeleted(task, tasks.getTaskListSize());
     }
 
     /**
