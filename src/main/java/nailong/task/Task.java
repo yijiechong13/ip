@@ -77,9 +77,10 @@ public class Task {
         if (matchFound) {
             time = matcher.group();
             localDate = LocalDate.parse(time, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            formattedDate = localDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+            formattedDate = localDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));;
         }
 
+        assert formattedDate != null : "Formatted date should not be null";
         return formattedDate;
 
     }
