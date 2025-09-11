@@ -129,6 +129,8 @@ class Storage {
             }
             break;
         default:
+            System.out.println("Warning: Unknown task type '" + taskType + "'in line: " + line);
+            return null;
         }
         return task;
     }
