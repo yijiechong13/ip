@@ -1,28 +1,49 @@
+
+/* ---- User message bubble ---- */
 .label {
-    background:white;
-    -fx-background-color: background;
-    -fx-border-color: #d55e00 #009e73 #cc79a7 #0072b2;
+    -fx-background-color: white;
+    -fx-text-fill: #2F2A1F; /* dark ink */
+    -fx-padding: 12 14;
+    -fx-font-size: 14px;
+    -fx-background-radius: 18 18 0 18;  /
+    -fx-border-radius:     18 18 0 18;
+    -fx-border-color: black;
     -fx-border-width: 2px;
-    -fx-background-radius: 1em 1em 0 1em;
-    -fx-border-radius: 1em 1em 0 1em;
-    -fx-text-fill: ladder(background, white 49%, black 50%);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 18, 0.25, 0, 6);
 }
 
-
+/* ---- Nailong bubble ---- */
 .reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
+    -fx-background-color: white;
+    -fx-text-fill: #2F2A1F;
+    -fx-padding: 12 14;
+    -fx-font-size: 14px;
+    -fx-background-radius: 18 18 18 0;  /* tail on the left */
+    -fx-border-radius:     18 18 18 0;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 18, 0.25, 0, 6);
+}
+
+/* ---- Optional error bubble ---- */
+.bubble-error {
+    -fx-border-color: #FFB8A1;
 }
 
 #displayPicture {
-    /* Shadow effect on image. */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.35, 0, 8);
 
-    /* Change size of image. */
-    -fx-scale-x: 1;
-    -fx-scale-y: 1;
-
-    /* Rotate image clockwise by degrees. */
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
     -fx-rotate: 0;
 }
 
+.bubble-softline {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 28, 0.2, 0, 10);
+}
+
+
+.label, .reply-label {
+    -fx-font-smoothing-type: gray;
+}
