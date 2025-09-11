@@ -12,6 +12,12 @@ import nailong.task.Todo;
  * for managing tasks including todos, deadlines, and events.
  */
 public class Nailong {
+    // Constants to replace magic numbers
+    private static final int TODO_COMMAND_LENGTH = 5;
+    private static final int DEADLINE_COMMAND_LENGTH = 9;
+    private static final int EVENT_COMMAND_LENGTH = 6;
+    private static final int EXPECTED_EVENT_PARTS_COUNT = 3;
+
     private TaskList tasks;
     private final Storage storage;
     private final Ui ui;
@@ -149,7 +155,7 @@ public class Nailong {
      */
     private String handleTodoCommand(String input) {
         try {
-            String description = input.substring(5).trim();
+            String description = input.substring(TODO_COMMAND_LENGTH).trim();
 
             if (description.isEmpty()) {
                 return ui.showError("Invalid format! Use: todo <description>");
@@ -175,7 +181,7 @@ public class Nailong {
             return ui.showError("Invalid format! Use: deadline <description> /by <date/time> ");
         }
         try {
-            String description = input.substring(9).trim();
+            String description = input.substring(DEADLINE_COMMAND_LENGTH).trim();
 
             if (description.isEmpty()) {
                 return ui.showError("Invalid format! Use: deadline <description> /by <date/time>");
@@ -205,14 +211,14 @@ public class Nailong {
         }
 
         try {
-            String description = input.substring(6).trim();
+            String description = input.substring(EVENT_COMMAND_LENGTH).trim();
 
             if (description.isEmpty()) {
                 return ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
             } else {
                 String[] eventParts = description.split("/from |/to ");
 
-                if (eventParts.length < 3) {
+                if (eventParts.length < EXPECTED_EVENT_PARTS_COUNT) {
                     return ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
                 } else {
                     String desc = eventParts[0].trim();
