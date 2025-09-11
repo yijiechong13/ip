@@ -18,7 +18,7 @@ public class Ui {
      * Displays the welcome message when the application starts.
      */
     public String showWelcome() {
-        return "Hello, I'm your chatbot Nailong \uD83C\uDF3B\uD83D\uDC9B! \n"
+        return "Hello, I'm your chatbot Nailong \uD83D\uDC23✨! \n"
             + " What can I do for you?";
     }
 

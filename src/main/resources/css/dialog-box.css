@@ -1,27 +1,22 @@
-
 /* ---- User message bubble ---- */
 .label {
-    -fx-background-color: white;
+    -fx-background-color: #FBEAA1; /* naillong-yellow-2 pastel */
     -fx-text-fill: #2F2A1F; /* dark ink */
     -fx-padding: 12 14;
     -fx-font-size: 14px;
-    -fx-background-radius: 18 18 0 18;  /
+    -fx-background-radius: 18 18 0 18;  /* tail on the right */
     -fx-border-radius:     18 18 0 18;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 18, 0.25, 0, 6);
 }
 
 /* ---- Nailong bubble ---- */
 .reply-label {
-    -fx-background-color: white;
+    -fx-background-color: #B8D4FF; /* soft blue to match user avatar */
     -fx-text-fill: #2F2A1F;
     -fx-padding: 12 14;
     -fx-font-size: 14px;
     -fx-background-radius: 18 18 18 0;  /* tail on the left */
     -fx-border-radius:     18 18 18 0;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 18, 0.25, 0, 6);
 }
 
@@ -43,7 +38,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 28, 0.2, 0, 10);
 }
 
-
 .label, .reply-label {
     -fx-font-smoothing-type: gray;
+    -fx-font-family: "Quicksand", "Baloo 2", "Nunito Sans Rounded", "Arial";
 }

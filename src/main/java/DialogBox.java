@@ -48,6 +48,8 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
+
+
     public static DialogBox getUserDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();

@@ -1,43 +1,31 @@
-.root {
-    /* palette */
-    naillong-yellow:   #F7D046;
-    naillong-yellow-2: #FBEAA1;
-    naillong-mint:     #D7F7E3;
-    naillong-leaf:     #6BCB77;
-    naillong-peach:    #FFB8A1;
-    ink-strong:        #2F2A1F;
-    ink-soft:          #6B644F;
-    line:              #E9E2C6;
-
+AnchorPane {
     /* background */
     -fx-background-color: linear-gradient(to bottom, #FFFDF4, #F9F6E6);
-    -fx-text-fill:        ink-strong;
+    -fx-background-image: url("../images/background.jpg"); /* Set image */
+    -fx-background-size: cover;
+    -fx-background-position: center bottom;
+    -fx-background-repeat: no-repeat;
+    -fx-text-fill: #2F2A1F;
     -fx-font-smoothing-type: gray;
     -fx-font-size: 14px;
-    -fx-font-family: "Nunito", "Noto Sans SC", "Arial";
+    -fx-font-family: "Quicksand", "Baloo 2", "Nunito Sans Rounded", "Arial";
+    -fx-background-size: 400px 600px;
+    -fx-background-repeat: round;
 }
 
-/* ===========================
-   Chat bubbles
-   =========================== */
 .label {
-    -fx-background-color: white;
-    -fx-text-fill: ink-strong;
+    -fx-background-color: #FBEAA1; /* naillong-yellow-2 pastel */
+    -fx-text-fill: #2F2A1F;
     -fx-padding: 12 14;
     -fx-background-radius: 18 18 0 18;
     -fx-border-radius: 18 18 0 18;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 18, 0.25, 0, 6);
-
-    -fx-border-color: black;
-    -fx-border-width: 2px;
 }
 
 .reply-label {
-    -fx-background-color: white;
-    -fx-text-fill: ink-strong;
+    -fx-background-color: #B8D4FF; /* soft blue to match user avatar */
+    -fx-text-fill: #2F2A1F;
     -fx-padding: 12 14;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
 
     -fx-background-radius: 18 18 18 0;
     -fx-border-radius:     18 18 18 0;
@@ -52,9 +40,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 28, 0.2, 0, 10);
 }
 
-/* ===========================
-   Avatars
-   =========================== */
 #displayPicture {
     -fx-background-radius: 16;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.35, 0, 8);
@@ -64,24 +49,21 @@
     -fx-rotate: 0;
 }
 
-/* ===========================
-   Input bar
-   =========================== */
 .text-field {
     -fx-background-color: white;
-    -fx-border-color: line;
+    -fx-border-color: #E9E2C6;
     -fx-border-width: 1px;
     -fx-background-radius: 999;
     -fx-border-radius: 999;
     -fx-padding: 10 14;
-    -fx-prompt-text-fill: ink-soft;
-    -fx-highlight-fill: naillong-yellow-2;
+    -fx-prompt-text-fill: #6B644F;
+    -fx-highlight-fill: #FBEAA1;
     -fx-font-size: 15px;
 }
 
 .button {
-    -fx-background-color: linear-gradient(to bottom, naillong-yellow, #F2C22F);
-    -fx-text-fill: #3A2F12;
+    -fx-background-color: linear-gradient(to bottom, #FFE4E1, #FFC1CC);
+    -fx-text-fill: #2F2A1F;
     -fx-font-weight: bold;
     -fx-background-radius: 999;
     -fx-padding: 10 18;
@@ -98,11 +80,10 @@
     -fx-background-insets: 1 0 0 0;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 12, 0.35, 0, 3);
 }
+.scroll-pane{
+    -fx-background-color: rgba(0,0,0,.5);
+}
 
-/* ===========================
-   ScrollPane & Scrollbar
-   =========================== */
-.scroll-pane,
 .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
@@ -148,11 +129,8 @@
     -fx-pref-height: 12px;
 }
 
-/* ===========================
-   Header
-   =========================== */
 .header {
-    -fx-background-color: linear-gradient(to right, naillong-yellow, naillong-yellow-2);
+    -fx-background-color: linear-gradient(to right, #F7D046, #FBEAA1);
     -fx-background-radius: 18;
     -fx-padding: 10 16;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 24, 0.3, 0, 6);

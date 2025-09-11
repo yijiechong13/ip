@@ -25,7 +25,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            stage.setTitle("Nailong");
+            stage.setTitle("Nailong\uD83D\uDC23");
             stage.setScene(scene);
             //fx: controller attribute in FXML tells the loader which Java Class to use
             //fxmlLoader.load() : loader creates an instance of MainWindow and wires up all the @FXML fields and method
