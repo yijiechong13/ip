@@ -1,6 +1,5 @@
 package nailong;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import nailong.task.Deadline;
 import nailong.task.Event;
@@ -13,7 +12,7 @@ import nailong.task.Todo;
  * for managing tasks including todos, deadlines, and events.
  */
 public class Nailong {
-    private static TaskList tasks;
+    private TaskList tasks;
     private final Storage storage;
     private final Ui ui;
 
@@ -29,33 +28,47 @@ public class Nailong {
     }
 
     /**
-     * Marks the task at the specified index as completed.
+     * Processes a single user input and returns the appropriate response.
+     * This method is used for GUI interactions.
      *
-     * @param index Index of the task to mark as done (0-based).
+     * @param input User input command.
+     * @return Response string to display to the user.
      */
-    public void markDone(int index) {
-        if (index < 0 || index >= tasks.getTaskListSize()) {
-            ui.showError("Invalid task number!");
-            return;
-        }
-        Task task = tasks.getTask(index);
-        task.markDone();
-        ui.showTaskMarked(task);
-    }
+    public String getResponse(String input) {
+        String[] parts = input.trim().split("\\s+");
+        String command = parts[0].toLowerCase();
 
-    /**
-     * Marks the task at the specified index as not completed.
-     *
-     * @param index Index of the task to mark as undone (0-based).
-     */
-    public void markUndone(int index) {
-        if (index < 0 || index >= tasks.getTaskListSize()) {
-            ui.showError("Invalid task number!");
-            return;
+        switch (command) {
+        case "mark":
+            return handleMarkCommand(parts);
+
+        case "unmark":
+            return handleUnmarkCommand(parts);
+
+        case "bye":
+            return ui.showGoodbye();
+
+        case "list":
+            return ui.showTaskList(tasks);
+
+        case "todo":
+            return handleTodoCommand(input);
+
+        case "deadline":
+            return handleDeadlineCommand(input);
+
+        case "event":
+            return handleEventCommand(input);
+
+        case "delete":
+            return handleDeleteCommand(parts);
+
+        case "find":
+            return handleFindCommand(parts);
+
+        default:
+            return ui.showUnknownCommand();
         }
-        Task task = tasks.getTask(index);
-        task.markUndone();
-        ui.showTaskUnmarked(task);
     }
 
     /**
@@ -63,15 +76,18 @@ public class Nailong {
      *
      * @param parts Array containing the command and task number.
      */
-    private void handleMarkCommand(String[] parts) {
+    private String handleMarkCommand(String[] parts) {
         try {
             int index = Integer.parseInt(parts[1]) - 1;
-            ui.showLine();
-            markDone(index);
+            if (index < 0 || index >= tasks.getTaskListSize()) {
+                return ui.showError("Invalid task number!");
+            }
+            Task task = tasks.getTask(index);
+            task.markDone();
             storage.save(tasks);
-            ui.showLine();
+            return ui.showTaskMarked(task);
         } catch (Exception e) {
-            ui.showError("Invalid format! Use: mark <number>");
+            return ui.showError("Invalid format! Use: mark <number>");
         }
     }
 
@@ -80,17 +96,18 @@ public class Nailong {
      *
      * @param parts Array containing the command and task number.
      */
-    private void handleUnmarkCommand(String[] parts) {
+    private String handleUnmarkCommand(String[] parts) {
         try {
             int index = Integer.parseInt(parts[1]) - 1;
-            ui.showLine();
-            markUndone(index);
+            if (index < 0 || index >= tasks.getTaskListSize()) {
+                return ui.showError("Invalid task number!");
+            }
+            Task task = tasks.getTask(index);
+            task.markUndone();
             storage.save(tasks);
-            ui.showLine();
+            return ui.showTaskUnmarked(task);
         } catch (Exception e) {
-            ui.showLine();
-            ui.showError("Invalid format! Use: unmark <number>");
-            ui.showLine();
+            return ui.showError("Invalid format! Use: unmark <number>");
         }
     }
 
@@ -100,22 +117,20 @@ public class Nailong {
      *
      * @param input Full command string containing todo description.
      */
-    private void handleTodoCommand(String input) {
+    private String handleTodoCommand(String input) {
         try {
             String description = input.substring(5).trim();
 
             if (description.isEmpty()) {
-                ui.showError("Invalid format! Use: todo <description>");
+                return ui.showError("Invalid format! Use: todo <description>");
             } else {
                 Task task = new Todo(description);
                 tasks.addTask(task);
                 storage.save(tasks);
-                ui.showTaskAdded(task, tasks.getTaskListSize());
+                return ui.showTaskAdded(task, tasks.getTaskListSize());
             }
         } catch (StringIndexOutOfBoundsException e) {
-            ui.showLine();
-            ui.showError("Invalid format! Use: todo <description>");
-            ui.showLine();
+            return ui.showError("Invalid format! Use: todo <description>");
         }
     }
 
@@ -125,16 +140,15 @@ public class Nailong {
      *
      * @param input Full command string containing deadline description and due date.
      */
-    private void handleDeadlineCommand(String input) {
+    private String handleDeadlineCommand(String input) {
         if (!input.contains("/by")) {
-            ui.showError("Invalid format! Use: deadline <description> /by <date/time> ");
-            return;
+            return ui.showError("Invalid format! Use: deadline <description> /by <date/time> ");
         }
         try {
             String description = input.substring(9).trim();
 
             if (description.isEmpty()) {
-                ui.showError("Invalid format! Use: deadline <description> /by <date/time>");
+                return ui.showError("Invalid format! Use: deadline <description> /by <date/time>");
             } else {
                 String[] deadlineParts = description.split("/by");
                 String desc = deadlineParts[0].trim();
@@ -142,10 +156,10 @@ public class Nailong {
                 Task task = new Deadline(desc, by);
                 tasks.addTask(task);
                 storage.save(tasks);
-                ui.showTaskAdded(task, tasks.getTaskListSize());
+                return ui.showTaskAdded(task, tasks.getTaskListSize());
             }
         } catch (StringIndexOutOfBoundsException e) {
-            ui.showError("Invalid format! Use: deadline <description> /by <date/time>");
+            return ui.showError("Invalid format! Use: deadline <description> /by <date/time>");
         }
     }
 
@@ -155,40 +169,39 @@ public class Nailong {
      *
      * @param input Full command string containing event description, start, and end times.
      */
-    private void handleEventCommand(String input) {
+    private String handleEventCommand(String input) {
         if (!input.contains("/from") || !input.contains("/to")) {
-            ui.showError("Invalid format! Use: event <description> /from <start> /to <end>");
-            ui.showLine();
-            return;
+            return ui.showError("Invalid format! Use: event <description> /from <start> /to <end>");
         }
 
         try {
             String description = input.substring(6).trim();
 
             if (description.isEmpty()) {
-                ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
+                return ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
             } else {
                 String[] eventParts = description.split("/from |/to ");
 
                 if (eventParts.length < 3) {
-                    ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
+                    return ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
                 } else {
                     String desc = eventParts[0].trim();
                     String from = eventParts[1].trim();
                     String to = eventParts[2].trim();
 
                     if (desc.isEmpty() || from.isEmpty() || to.isEmpty()) {
-                        ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
+                        return ui.showError("Invalid format! "
+                                + "Use: event <description> /from <date/time> /to <date/time>");
                     } else {
                         Task task = new Event(desc, from, to);
                         tasks.addTask(task);
                         storage.save(tasks);
-                        ui.showTaskAdded(task, tasks.getTaskListSize());
+                        return ui.showTaskAdded(task, tasks.getTaskListSize());
                     }
                 }
             }
         } catch (Exception e) {
-            ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
+            return ui.showError("Invalid format! Use: event <description> /from <date/time> /to <date/time>");
         }
     }
 
@@ -197,14 +210,17 @@ public class Nailong {
      *
      * @param parts Array containing the command and task number.
      */
-    private void handleDeleteCommand(String[] parts) {
+    private String handleDeleteCommand(String[] parts) {
         try {
             int index = Integer.parseInt(parts[1]) - 1;
+            if (index < 0 || index >= tasks.getTaskListSize()) {
+                return ui.showError("Invalid task number!");
+            }
             Task task = tasks.removeTask(index);
             storage.save(tasks);
-            ui.showTaskDeleted(task, tasks.getTaskListSize());
+            return ui.showTaskDeleted(task, tasks.getTaskListSize());
         } catch (Exception e) {
-            ui.showError("Invalid format! Use: delete <number>");
+            return ui.showError("Invalid format! Use: delete <number>");
         }
     }
 
@@ -214,7 +230,10 @@ public class Nailong {
      *
      * @param parts Array containing the command and search keyword.
      */
-    private void handleFindCommand(String[] parts) {
+    private String handleFindCommand(String[] parts) {
+        if (parts.length < 2) {
+            return ui.showError("Invalid format! Use: find <keyword>");
+        }
         String subString = parts[1];
         ArrayList<Task> tempList = new ArrayList<>();
         for (int i = 0; i < tasks.getTaskListSize(); i++) {
@@ -222,73 +241,13 @@ public class Nailong {
                 tempList.add(tasks.getTask(i));
             }
         }
-        ui.showFindResults(tempList);
-        ui.showLine();
+        return ui.showFindResults(tempList);
     }
 
     /**
-     * Runs the main application loop.
-     * Processes user commands until the user types "bye".
+     * Returns the welcome message.
      */
-    public void run() {
-        ui.showWelcome();
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            String input = sc.nextLine().trim();
-            String[] parts = input.split("\\s+");
-            String command = parts[0].toLowerCase();
-
-            switch (command) {
-            case "mark":
-                handleMarkCommand(parts);
-                break;
-
-            case "unmark":
-                handleUnmarkCommand(parts);
-                break;
-
-            case "bye":
-                ui.showGoodbye();
-                return;
-
-            case "list":
-                ui.showTaskList(tasks);
-                break;
-
-            case "todo":
-                handleTodoCommand(input);
-                break;
-
-            case "deadline":
-                handleDeadlineCommand(input);
-                break;
-
-            case "event":
-                handleEventCommand(input);
-                break;
-
-            case "delete":
-                handleDeleteCommand(parts);
-                break;
-
-            case "find":
-                handleFindCommand(parts);
-                break;
-
-            default:
-                ui.showUnknownCommand();
-                break;
-            }
-        }
-    }
-
-    /**
-     * Main method to start the Nailong application.
-     *
-     * @param args Command line arguments (not used).
-     */
-    public static void main(String[] args) {
-        new Nailong("./data/Nailong.txt").run();
+    public String getWelcomeMessage() {
+        return ui.showWelcome();
     }
 }
