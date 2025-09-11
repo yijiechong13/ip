@@ -88,9 +88,8 @@ class Storage {
      * @return Parsed Task object, or null if the line is empty or invalid.
      */
     public Task parseTask(String line) {
-        if (line.isEmpty()) {
-            return null;
-        }
+        assert line != null && !line.isEmpty() : "Line to parse should not be null or empty";
+
         String [] parts = line.split(" \\| ");
         String taskType = parts[0];
         String status = parts[1];
