@@ -27,6 +27,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
     /**
      * Returns the status icon for the task.
      * 'X' for completed tasks, ' ' for incomplete tasks.

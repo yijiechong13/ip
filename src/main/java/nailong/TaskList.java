@@ -1,6 +1,7 @@
 package nailong;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import nailong.task.Task;
 
@@ -50,5 +51,15 @@ class TaskList {
      */
     public int getTaskListSize() {
         return tasks.size();
+    }
+
+    public void printCompletedTasks() {
+        String completed = tasks.stream()
+                .filter(Task::isDone)
+                .map(Task::toString)
+                .collect(Collectors.joining("\n"));
+
+        System.out.println("Here are your completed tasks:");
+        System.out.println(completed.isEmpty() ? "None yet!" : completed);
     }
 }
