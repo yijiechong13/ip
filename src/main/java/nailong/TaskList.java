@@ -53,6 +53,17 @@ class TaskList {
         return tasks.size();
     }
 
+    /**
+     * Adds a task at the specified index.
+     */
+    public void addTaskAtIndex(Task task, int index) {
+        if (index >= 0 && index <= tasks.size()) {
+            tasks.add(index, task);
+        } else {
+            tasks.add(task); // Add at end if index is invalid
+        }
+    }
+
     public void printCompletedTasks() {
         String completed = tasks.stream()
                 .filter(Task::isDone)

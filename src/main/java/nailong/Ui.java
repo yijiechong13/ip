@@ -88,7 +88,7 @@ public class Ui {
      */
     public String showUnknownCommand() {
         return "I don't understand that command! \n "
-            + "Available commands: list, todo, deadline, event, mark, unmark, delete, bye";
+            + "Available commands: list, todo, deadline, event, mark, unmark, delete, undo, bye";
     }
 
     /**

@@ -21,6 +21,7 @@ public class Nailong {
     private TaskList tasks;
     private final Storage storage;
     private final Ui ui;
+    private CommandHistory commandHistory;
 
     /**
      * Constructs a new Nailong chatbot with the specified storage file path.
@@ -31,6 +32,7 @@ public class Nailong {
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
+        commandHistory = new CommandHistory();
     }
 
     /**
@@ -108,6 +110,9 @@ public class Nailong {
         case "find":
             return handleFindCommand(parts);
 
+        case "undo":
+            return commandHistory.undoLastCommand(tasks, storage);
+
         default:
             return ui.showUnknownCommand();
         }
@@ -126,6 +131,7 @@ public class Nailong {
 
         Task task = tasks.getTask(index);
         task.markDone();
+        commandHistory.addCommand(new CommandHistory.MarkCommand(index));
         storage.save(tasks);
         return ui.showTaskMarked(task);
     }
@@ -143,6 +149,7 @@ public class Nailong {
 
         Task task = tasks.getTask(index);
         task.markUndone();
+        commandHistory.addCommand(new CommandHistory.UnmarkCommand(index));
         storage.save(tasks);
         return ui.showTaskUnmarked(task);
     }
@@ -162,6 +169,7 @@ public class Nailong {
             } else {
                 Task task = new Todo(description);
                 tasks.addTask(task);
+                commandHistory.addCommand(new CommandHistory.AddCommand(tasks.getTaskListSize() - 1));
                 storage.save(tasks);
                 return ui.showTaskAdded(task, tasks.getTaskListSize());
             }
@@ -191,6 +199,7 @@ public class Nailong {
                 String by = deadlineParts[1].trim();
                 Task task = new Deadline(desc, by);
                 tasks.addTask(task);
+                commandHistory.addCommand(new CommandHistory.AddCommand(tasks.getTaskListSize() - 1));
                 storage.save(tasks);
                 return ui.showTaskAdded(task, tasks.getTaskListSize());
             }
@@ -231,6 +240,7 @@ public class Nailong {
                     } else {
                         Task task = new Event(desc, from, to);
                         tasks.addTask(task);
+                        commandHistory.addCommand(new CommandHistory.AddCommand(tasks.getTaskListSize() - 1));
                         storage.save(tasks);
                         return ui.showTaskAdded(task, tasks.getTaskListSize());
                     }
@@ -252,6 +262,8 @@ public class Nailong {
             return getIndexErrorMessage(index, "delete");
         }
 
+        Task taskToDelete = tasks.getTask(index);
+        commandHistory.addCommand(new CommandHistory.DeleteCommand(taskToDelete, index));
         Task task = tasks.removeTask(index);
         storage.save(tasks);
         return ui.showTaskDeleted(task, tasks.getTaskListSize());
