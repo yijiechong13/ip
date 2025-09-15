@@ -23,8 +23,8 @@ public class Main extends Application {
             //parses the FXML file, builds the scene graph
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
+            stage.setMinHeight(700);
+            stage.setMinWidth(400);
             stage.setTitle("Nailong\uD83D\uDC23");
             stage.setScene(scene);
             //fx: controller attribute in FXML tells the loader which Java Class to use
