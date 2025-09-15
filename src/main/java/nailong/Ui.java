@@ -18,15 +18,15 @@ public class Ui {
      * Displays the welcome message when the application starts.
      */
     public String showWelcome() {
-        return "Hello, I'm your chatbot Nailong \uD83D\uDC23✨! \n"
-            + " What can I do for you?";
+        return "Hewwo~ \uD83C\uDF3B \nNailong is here to brighten your day~ 🌟💛\n"
+            + "What can I do for you?";
     }
 
     /**
      * Displays the goodbye message when the application terminates.
      */
     public String showGoodbye() {
-        return "Bye. Hope to see you again soon!";
+        return "Byebye ~ See you again soon! ✨\uD83C\uDF38 ";
     }
 
     /**
@@ -36,9 +36,13 @@ public class Ui {
      */
     public String showTaskList(TaskList tasks) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Here are the tasks in your list:").append("\n");
-        for (int i = 0; i < tasks.getTaskListSize(); i++) {
-            sb.append(" " + (i + 1) + "." + tasks.getTask(i) + "\n");
+        if (tasks.getTaskListSize() > 0) {
+            sb.append("Here’s your task list 🌟:\n");
+            for (int i = 0; i < tasks.getTaskListSize(); i++) {
+                sb.append(" " + (i + 1) + ". " + tasks.getTask(i) + "\n");
+            }
+        } else {
+            sb.append("Yay~ 🌸 No tasks right now 💖 Nailong says you can rest a bit ✨");
         }
         return sb.toString();
     }
@@ -51,21 +55,26 @@ public class Ui {
      * @return Formatted string with proper singular/plural form.
      */
     private String formatTaskCount(int count) {
-        return count + (count == 1 ? " task in the list." : " tasks in the list.");
+        if (count == 0) {
+            return "No tasks left~ 🌸";
+        }
+        return count + (count == 1
+                ? " little task waiting for you~ 🌟"
+                : " tasks in your list ✨");
     }
 
 
     /**
-     * Displays confirmation message when a task is successfully added.
+     * Displays confirmation message when a task is successfully added
      *
      * @param task Task that was added.
      * @param totalTasks Total number of tasks after addition.
      */
     public String showTaskAdded(Task task, int totalTasks) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" Got it. I've added this task:").append("\n");
-        sb.append("  " + task).append("\n");
-        sb.append(" Now you have " + formatTaskCount(totalTasks));
+        sb.append("Yayyy ~ \uD83C\uDF3B\nNailong has added this task into your list:\n");
+        sb.append(task).append("\n");
+        sb.append("Now you have " + formatTaskCount(totalTasks));
         return sb.toString();
     }
 
@@ -77,9 +86,9 @@ public class Ui {
      */
     public String showTaskDeleted(Task task, int remainingTasks) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" Noted. I've removed this task:").append("\n");
-        sb.append(" " + task).append("\n");
-        sb.append("Now you have " + formatTaskCount(remainingTasks));
+        sb.append("Aww~ Nailong poofed this task away...").append("\n");
+        sb.append(task).append("\n");
+        sb.append("Now only " + formatTaskCount(remainingTasks));
         return sb.toString();
     }
 
@@ -87,8 +96,9 @@ public class Ui {
      * Displays error message for unknown commands and shows available commands.
      */
     public String showUnknownCommand() {
-        return "I don't understand that command! \n "
-            + "Available commands: list, todo, deadline, event, mark, unmark, delete, undo, bye";
+        return "Eep~ \uD83C\uDF19\nNailong didn’t quite get that command… \n"
+                + "Try these instead: "
+                + "list, todo, deadline, event, mark, unmark, delete, undo, bye";
     }
 
     /**
@@ -98,8 +108,8 @@ public class Ui {
      */
     public String showTaskMarked(Task task) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nice! I've marked this task as done:").append("\n");
-        sb.append(" " + task);
+        sb.append("Teehee~ ✨ Task completed !\nNailong is super proud of you! \uD83C\uDF1F ").append("\n");
+        sb.append(task);
         return sb.toString();
     }
 
@@ -110,8 +120,8 @@ public class Ui {
      */
     public String showTaskUnmarked(Task task) {
         StringBuilder sb = new StringBuilder();
-        sb.append("OK, I've marked this task as not done yet:").append("\n");
-        sb.append(" " + task);
+        sb.append("Aww~ This one isn’t finished yet…\nNailong put it back on your list ! ✨ ").append("\n");
+        sb.append(task);
         return sb.toString();
     }
 
@@ -121,7 +131,8 @@ public class Ui {
      * @param errorMessage Error message to display.
      */
     public String showError(String errorMessage) {
-        return errorMessage;
+        return "Oh nooo 💫 Nailong ran into a tiny oopsie ✨\n"
+                + "Here’s what happened: " + errorMessage + " 🌸";
     }
 
     /**
@@ -133,12 +144,12 @@ public class Ui {
     public String showFindResults(ArrayList<Task> matchingTasks) {
         StringBuilder sb = new StringBuilder();
         if (!matchingTasks.isEmpty()) {
-            sb.append("Here are the matching tasks in your list: ").append("\n");
+            sb.append("Yay~ \uD83C\uDF1F\nNailong found these matching tasks for you: ").append("\n");
             for (int i = 0; i < matchingTasks.size(); i++) {
-                sb.append(i + 1 + ". " + matchingTasks.get(i));
+                sb.append((i + 1) + ". " + matchingTasks.get(i) + "\n");
             }
         } else {
-            sb.append("No match found!");
+            sb.append("Aww… No matches this time \uD83D\uDCAB Nailong couldn’t find anything... ");
         }
         return sb.toString();
     }
