@@ -32,7 +32,7 @@ public class CommandHistory {
      */
     public String undoLastCommand(TaskList tasks, Storage storage) {
         if (history.isEmpty()) {
-            return "Nothing to undo~ ✨ Nailong checked the history and it’s all clear ~";
+            return "Nothing to undo~ ✨\nNailong checked the history and it’s all clear ~";
         }
 
         Command lastCommand = history.pop();
@@ -61,7 +61,7 @@ public class CommandHistory {
         @Override
         public String undo(TaskList tasks) {
             Task removedTask = tasks.removeTask(taskIndex);
-            return "Undo~ \uD83D\uDCAB Nailong removed this task:\\n " + removedTask.toString();
+            return "Undo~ ✨Nailong removed this task:\n " + removedTask.toString();
         }
     }
 
@@ -87,7 +87,7 @@ public class CommandHistory {
         @Override
         public String undo(TaskList tasks) {
             tasks.addTaskAtIndex(deletedTask, originalIndex);
-            return "Undo~ ✨ Nailong restored this task to your list:\\n " + deletedTask.toString();
+            return "Undo~ ✨\nNailong restored this task to your list:\n " + deletedTask.toString();
         }
     }
 
@@ -105,7 +105,7 @@ public class CommandHistory {
         public String undo(TaskList tasks) {
             Task task = tasks.getTask(taskIndex);
             task.markUndone();
-            return "Undo~ 🌙 Mark cleared—this one is back to ‘not done’:\n" + task.toString();
+            return "Undo~ ✨\nNailong marked this task back to ‘not done’:\n" + task.toString();
         }
     }
 
@@ -124,7 +124,7 @@ public class CommandHistory {
         public String undo(TaskList tasks) {
             Task task = tasks.getTask(taskIndex);
             task.markDone();
-            return "Undo~ \uD83C\uDF1F Marked as done again:\\n" + task.toString();
+            return "Undo~ ✨ Nailong marked this task as done again:\\n" + task.toString();
         }
     }
 }

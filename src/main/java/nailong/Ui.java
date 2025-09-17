@@ -42,7 +42,7 @@ public class Ui {
                 sb.append(" " + (i + 1) + ". " + tasks.getTask(i) + "\n");
             }
         } else {
-            sb.append("Yay~ 🌸 No tasks right now 💖 Nailong says you can rest a bit ✨");
+            sb.append("Yay~ 🌸 No tasks right now..\n Nailong says you can rest a bit ✨");
         }
         return sb.toString();
     }
@@ -56,7 +56,7 @@ public class Ui {
      */
     private String formatTaskCount(int count) {
         if (count == 0) {
-            return "No tasks left~ 🌸";
+            return "No tasks left~";
         }
         return count + (count == 1
                 ? " little task waiting for you~ 🌟"
@@ -88,7 +88,11 @@ public class Ui {
         StringBuilder sb = new StringBuilder();
         sb.append("Aww~ Nailong poofed this task away...").append("\n");
         sb.append(task).append("\n");
-        sb.append("Now only " + formatTaskCount(remainingTasks));
+        if (remainingTasks == 0) {
+            sb.append(formatTaskCount(remainingTasks));
+        } else {
+            sb.append("Now only " + formatTaskCount(remainingTasks));
+        }
         return sb.toString();
     }
 
