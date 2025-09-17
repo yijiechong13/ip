@@ -2,8 +2,44 @@
 
 A cheerful JavaFX-based task management application featuring Nailong, your adorable digital assistant who helps you organize your daily tasks with a warm, encouraging personality.
 
-## Basic Features
-The main feature of the application is **Adding tasks**.
+## Motivation
+This project was created as part of the **CS2103T Software Engineering** course at NUS.  
+In an era where LLMs are integrated into almost every application, Nailong is designed to reflect simplicity and charm — showing that even a cute, lightweight bot can still be fun and useful.
+
+## Features
+- **Task Management**: Create, view, mark, unmark, delete, and undo tasks
+- **Multiple Task Types**:
+    - **Todo** – Simple tasks without dates
+    - **Deadline** – Tasks with due dates
+    - **Event** – Tasks with start and end times
+- **Search Functionality**: Find tasks by keyword
+- **Persistent Storage**: Tasks are automatically saved and loaded from file
+- **GUI Interface**: Modern JavaFX-based graphical interface with Nailong’s cheerful personality
+
+## Getting Started
+### Prerequisites
+* Java 17 or later
+* JavaFX 17.0.14.fx-zulu (included in dependencies)
+
+### Installation
+1. Clone the repository:
+```
+git clone <repository-url>
+cd ip
+```
+
+### Building
+```
+./gradlew build
+```
+### Run the application
+```
+./gradlew run
+```
+
+## Usage
+### Basic Commands 
+* Add Tasks: 
 You can add three types of tasks:
 * **Todo Tasks** – Simple tasks without deadlines
 ```
