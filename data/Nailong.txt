@@ -1,2 +1,1 @@
-T | 0 | borrow book
-D | 0 | return book | Sep 19 2025
+T | 1 | borrow book
