@@ -20,7 +20,7 @@ public class TaskTest {
     @Test
     public void validateAndParseDate_validDate_success() {
         assertDoesNotThrow(() -> {
-            task.validateAndParseDate("25/12/2023");
+            task.validateAndParseDate("25/12/2025");
         });
     }
 
@@ -35,7 +35,7 @@ public class TaskTest {
     @Test
     public void validateAndParseDate_invalidDate_throwsException() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            task.validateAndParseDate("31/02/2023");
+            task.validateAndParseDate("31/02/2026");
         });
         assertTrue(exception.getMessage().contains("Invalid date"));
     }
@@ -50,8 +50,8 @@ public class TaskTest {
 
     @Test
     public void reformatDate_validDate_correctFormat() {
-        String result = task.reformatDate("25/12/2023");
-        assertEquals("Dec 25 2023", result);
+        String result = task.reformatDate("25/12/2025");
+        assertEquals("Dec 25 2025", result);
     }
 
     @Test

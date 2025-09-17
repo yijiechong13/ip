@@ -11,7 +11,7 @@ public class DeadlineTest {
     @Test
     public void constructor_validInputs_success() {
         assertDoesNotThrow(() -> {
-            new Deadline("Submit assignment", "15/03/2024");
+            new Deadline("Submit assignment", "15/03/2026");
         });
     }
 
@@ -24,16 +24,16 @@ public class DeadlineTest {
 
     @Test
     public void toString_correctFormat() {
-        Deadline deadline = new Deadline("Submit assignment", "15/03/2024");
-        String expected = "[D][ ] Submit assignment (by: Mar 15 2024)";
+        Deadline deadline = new Deadline("Submit assignment", "15/03/2026");
+        String expected = "[D][ ] Submit assignment (by: Mar 15 2026)";
         assertEquals(expected, deadline.toString());
     }
 
     @Test
     public void formatToStore_correctFormat() {
-        Deadline deadline = new Deadline("Submit assignment", "15/03/2024");
+        Deadline deadline = new Deadline("Submit assignment", "15/03/2026");
         deadline.markDone();
-        String expected = "D | 1 | Submit assignment | Mar 15 2024";
+        String expected = "D | 1 | Submit assignment | Mar 15 2026";
         assertEquals(expected, deadline.formatToStore());
     }
 }
