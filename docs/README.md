@@ -1,5 +1,6 @@
 ### Basic Features
-The main feature of the application is **Adding tasks**. You can add three types of tasks:
+The main feature of the application is **Adding tasks**. 
+You can add three types of tasks:
 * **Todo Tasks** – Simple tasks without deadlines
 ```
 todo borrow book
