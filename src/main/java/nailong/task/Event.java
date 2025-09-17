@@ -24,15 +24,17 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
+
+        // These will now throw IllegalArgumentException for any invalid dates
         LocalDate fromDate = super.validateAndParseDate(from);
         LocalDate toDate = super.validateAndParseDate(to);
 
         if (fromDate.isAfter(toDate)) {
             throw new IllegalArgumentException("Start date cannot be after end date!");
-        } else {
-            this.reformatStartTime = super.reformatDate(from);
-            this.reformatEndTime = super.reformatDate(to);
         }
+
+        this.reformatStartTime = super.reformatDate(from);
+        this.reformatEndTime = super.reformatDate(to);
     }
 
 

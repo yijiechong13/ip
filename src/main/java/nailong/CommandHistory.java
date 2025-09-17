@@ -42,20 +42,6 @@ public class CommandHistory {
     }
 
     /**
-     * Checks if there are any commands to undo.
-     */
-    public boolean canUndo() {
-        return !history.isEmpty();
-    }
-
-    /**
-     * Clears the command history.
-     */
-    public void clear() {
-        history.clear();
-    }
-
-    /**
      * Abstract command class for implementing the Command pattern.
      */
     public static abstract class Command {

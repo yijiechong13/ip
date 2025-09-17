@@ -2,6 +2,7 @@ package nailong.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,7 +88,10 @@ public class Task {
 
         try {
             String datePart = matcher.group();
-            return LocalDate.parse(datePart, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            DateTimeFormatter strictFmt =
+                    DateTimeFormatter.ofPattern("d/M/uuuu")
+                            .withResolverStyle(ResolverStyle.STRICT);
+            return LocalDate.parse(datePart, strictFmt);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date! Date does not exist!");
         }
