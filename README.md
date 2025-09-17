@@ -13,13 +13,15 @@ todo borrow book
 ```
 deadline return book /by 25/12/2025
 ```
-*
 * **Event Tasks**: Tasks with start and end times
 ```
 event boot camp /from 22/09/2025 /to 24/09/2025
 ```
 Other supported features include:
-* **List Tasks** : `list`
+* **List Tasks** : 
+```
+* list
+```
 * **Track completion status of tasks** : `mark/unmark <task_number>`
 ```
 mark 1
