@@ -1,3 +1,19 @@
+# Nailong 🐣 - Your Friendly Task Manager
+
+A cheerful JavaFX-based task management application featuring Nailong, your adorable digital assistant who helps you organize your daily tasks with a warm, encouraging personality.
+
+## Basic Features
+The main feature of the application is **Adding tasks**.
+You can add three types of tasks:
+* **Todo Tasks** – Simple tasks without deadlines
+```
+todo borrow book
+```
+* **Deadline Tasks**: Tasks with specific due dates (dd/MM/yyyy format)
+```
+deadline return book /by 25/12/2025
+```
+* **Event Tasks**: Tasks with start and end times
 ```
 event boot camp /from 22/09/2025 /to 24/09/2025
 ```
