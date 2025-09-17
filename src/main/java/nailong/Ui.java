@@ -131,8 +131,7 @@ public class Ui {
      * @param errorMessage Error message to display.
      */
     public String showError(String errorMessage) {
-        return "Oh nooo 💫 Nailong ran into a tiny oopsie ✨\n"
-                + "Here’s what happened: " + errorMessage + " 🌸";
+        return "Oh nooo... \n" + errorMessage;
     }
 
     /**

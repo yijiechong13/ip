@@ -1,4 +1,5 @@
 package nailong.task;
+import java.time.LocalDate;
 
 /**
  * Represents an event task with start and end times.
@@ -17,14 +18,23 @@ public class Event extends Task {
      * @param description Description of the event.
      * @param from Start date/time of the event.
      * @param to End date/time of the event.
+     * @throws IllegalArgumentException if any date format is invalid.
      */
     public Event(String description, String from, String to) {
         super(description);
         this.from = from;
         this.to = to;
-        this.reformatStartTime = super.reformatDate(from);
-        this.reformatEndTime = super.reformatDate(to);
+        LocalDate fromDate = super.validateAndParseDate(from);
+        LocalDate toDate = super.validateAndParseDate(to);
+
+        if (fromDate.isAfter(toDate)) {
+            throw new IllegalArgumentException("Start date cannot be after end date!");
+        } else {
+            this.reformatStartTime = super.reformatDate(from);
+            this.reformatEndTime = super.reformatDate(to);
+        }
     }
+
 
     /**
      * Returns the formatted string for storing the event task to file.

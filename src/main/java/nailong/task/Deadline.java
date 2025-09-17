@@ -13,13 +13,13 @@ public class Deadline extends Task {
      *
      * @param description Description of the deadline task.
      * @param by Deadline date/time for the task.
+     * @throws IllegalArgumentException if the date format is invalid.
      */
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
         this.reformatDeadline = super.reformatDate(by);
-    }
-
+        }
 
     /**
      * Returns the formatted string for storing the deadline task to file.

@@ -1,6 +1,7 @@
 package nailong.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,27 +67,46 @@ public class Task {
     }
 
     /**
+     * Validates and parses a date string from dd/MM/yyyy format.
+     * This is the core validation method used by other date-related methods.
+     *
+     * @param dateString The date string to validate and parse.
+     * @return LocalDate object if valid.
+     * @throws IllegalArgumentException if the date format is invalid or date doesn't exist.
+     */
+    public LocalDate validateAndParseDate(String dateString) {
+        if (dateString == null || dateString.trim().isEmpty()) {
+            throw new IllegalArgumentException("Date cannot be empty");
+        }
+
+        matcher = PatternRegex.matcher(dateString.trim());
+
+        if (!matcher.find()) {
+            throw new IllegalArgumentException("Invalid date format! Please use dd/MM/yyyy! (e.g 25/12/2025)");
+        }
+
+        try {
+            String datePart = matcher.group();
+            return LocalDate.parse(datePart, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date! Date does not exist!");
+        }
+    }
+
+    /**
      * Reformats a date string from dd/MM/yyyy format to MMM dd yyyy format.
-     * If no valid date pattern is found, returns an empty string.
+     * Now throws an exception for invalid dates instead of returning empty string.
      *
      * @param time Date string in dd/MM/yyyy format.
-     * @return Reformatted date string or empty string if no valid date found.
+     * @return Reformatted date string.
+     * @throws IllegalArgumentException if the date format is invalid.
      */
     public String reformatDate(String time) {
-        matcher = PatternRegex.matcher(time);
-        LocalDate localDate = null;
-        boolean matchFound = matcher.find();
-        String formattedDate = "";
-
-        if (matchFound) {
-            time = matcher.group();
-            localDate = LocalDate.parse(time, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            formattedDate = localDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));;
-        }
+        LocalDate localDate = validateAndParseDate(time);
+        String formattedDate = localDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));;;
 
         assert formattedDate != null : "Formatted date should not be null";
         return formattedDate;
-
     }
 
     @Override

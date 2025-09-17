@@ -197,13 +197,25 @@ public class Nailong {
                 String[] deadlineParts = description.split("/by");
                 String desc = deadlineParts[0].trim();
                 String by = deadlineParts[1].trim();
-                Task task = new Deadline(desc, by);
-                tasks.addTask(task);
-                commandHistory.addCommand(new CommandHistory.AddCommand(tasks.getTaskListSize() - 1));
-                storage.save(tasks);
-                return ui.showTaskAdded(task, tasks.getTaskListSize());
+
+                if (desc.isEmpty()) {
+                    return ui.showError("Description cannot be empty!");
+                }
+                if (by.isEmpty()) {
+                    return ui.showError("Date cannot be empty! Please provide a date after /by");
+                }
+
+                try {
+                    Task task = new Deadline(desc, by);
+                    tasks.addTask(task);
+                    commandHistory.addCommand(new CommandHistory.AddCommand(tasks.getTaskListSize() - 1));
+                    storage.save(tasks);
+                    return ui.showTaskAdded(task, tasks.getTaskListSize());
+                } catch (IllegalArgumentException e) {
+                    return ui.showError(e.getMessage());
+                }
             }
-        } catch (StringIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             return ui.showError("Invalid format! Use: deadline <description> /by <date/time>");
         }
     }
@@ -237,12 +249,15 @@ public class Nailong {
                     if (desc.isEmpty() || from.isEmpty() || to.isEmpty()) {
                         return ui.showError("Invalid format! "
                                 + "Use: event <description> /from <date/time> /to <date/time>");
-                    } else {
+                    }
+                    try {
                         Task task = new Event(desc, from, to);
                         tasks.addTask(task);
                         commandHistory.addCommand(new CommandHistory.AddCommand(tasks.getTaskListSize() - 1));
                         storage.save(tasks);
                         return ui.showTaskAdded(task, tasks.getTaskListSize());
+                    } catch (IllegalArgumentException e) {
+                        return ui.showError(e.getMessage());
                     }
                 }
             }
