@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import nailong.task.Task;
 
 /**
- * Main class for the Nailong task management application.
+ * ui.Main class for the Nailong task management application.
  * Now focuses on coordinating components rather than parsing commands.
  */
 public class Nailong {
