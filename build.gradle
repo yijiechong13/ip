@@ -47,7 +47,7 @@ test {
 
 application {
     // Use Launcher for GUI version
-    mainClass.set("Launcher")
+    mainClass.set("ui.Launcher")
 }
 
 shadowJar {
