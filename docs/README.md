@@ -20,19 +20,28 @@ event boot camp /from 22/09/2025 /to 24/09/2025
 Other supported features include:
 * **List Tasks** :
 ```
-* list
+list
 ```
 * **Track completion status of tasks** : `mark/unmark <task_number>`
 ```
 mark 1
 ```
-* **Delete Task **: `delete <task_number>`
+* **Delete task** : `delete <task_number>`
+```
+delete 1
+```
 * **Find Task**: `find <keyword>`
 ```
 find book
 ```
-* **Undo command**: `undo`
-* **Exit**: `bye`
+* **Undo command**:
+```
+undo
+```
+* **Exit**:
+```
+bye
+```
 
 ## Date Formats
 The application supports the following date format: `dd/MM/yyyy` (e.g. 25/12/2025)
