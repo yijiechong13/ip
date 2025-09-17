@@ -134,6 +134,11 @@ The project uses **Checkstyle** for code quality. Run checks with:
 ```
 ./gradlew checkstyleMain
 ```
+### Creating Distribution
+Generate a shadow JAR with all dependencies: 
+```
+./gradlew shadowJar
+```
 
 ## Storage
 All tasks are saved automatically in `./data/nailong.txt` in a human-readable format.  
