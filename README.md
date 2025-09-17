@@ -1,4 +1,4 @@
-# Nailong 🐣 - Your Friendly Task Manager
+# Nailong 🐣 - Your Task Manager
 
 A cheerful JavaFX-based task management application featuring Nailong, your adorable digital assistant who helps you organize your daily tasks with a warm, encouraging personality.
 
