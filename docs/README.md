@@ -1,4 +1,8 @@
-### Basic Features
+# Nailong 🐣 - Your Friendly Task Manager
+
+A cheerful JavaFX-based task management application featuring Nailong, your adorable digital assistant who helps you organize your daily tasks with a warm, encouraging personality.
+
+## Basic Features
 The main feature of the application is **Adding tasks**. 
 You can add three types of tasks:
 * **Todo Tasks** – Simple tasks without deadlines
@@ -68,3 +72,23 @@ src/
 data/
 └── Nailong.txt                       # Task storage file (created at runtime)
 ```
+
+## Development
+### Building
+```
+./gradlew build
+```
+### Testing
+```
+./gradlew testing
+```
+### Code Style
+The project uses **Checkstyle** for code quality. Run checks with:
+```
+./gradlew checkstyleMain
+```
+
+## Storage
+All tasks are saved automatically in `./data/nailong.txt` in a human-readable format.  
+The folder and file will be created for you on the first run if they do not already exist.
+

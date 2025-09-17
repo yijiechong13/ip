@@ -29,9 +29,6 @@ public class Main extends Application {
             stage.setMinWidth(450);
             stage.setTitle("Nailong\uD83D\uDC23");
             stage.setScene(scene);
-            //fx: controller attribute in FXML tells the loader which Java Class to use
-            //fxmlLoader.load() : loader creates an instance of ui.MainWindow and wires up all the @FXML fields and method
-            //After getController() : the loader now has UI tree (anchor pane) and controller instance (ui.MainWindow object)
             fxmlLoader.<MainWindow>getController().setNailong(nailong); // inject the Nailong instance
             stage.show();
         } catch (IOException e) {

@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class Task {
     protected String description;
     protected boolean isDone;
-    private final Pattern PatternRegex = Pattern.compile("\\d{1,2}/\\d{1,2}/\\d{4}");
+    private final Pattern patternRegex = Pattern.compile("\\d{1,2}/\\d{1,2}/\\d{4}");
     private Matcher matcher;
 
     /**
@@ -80,7 +80,7 @@ public class Task {
             throw new IllegalArgumentException("Date cannot be empty");
         }
 
-        matcher = PatternRegex.matcher(dateString.trim());
+        matcher = patternRegex.matcher(dateString.trim());
 
         if (!matcher.find()) {
             throw new IllegalArgumentException("Invalid date format! Please use dd/MM/yyyy! (e.g 25/12/2025)");

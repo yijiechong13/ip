@@ -15,6 +15,14 @@ public class Nailong {
     private CommandHistory commandHistory;
     private final Parser parser;
 
+    /**
+     * Constructs a new Nailong application instance with the specified file path for data storage.
+     * Initializes all necessary components including UI handler, storage manager, task list,
+     * command history for undo functionality, and command parser.
+     *
+     * @param filePath The file path where tasks will be saved and loaded from.
+     *                 If the file doesn't exist, it will be created automatically.
+     */
     public Nailong(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);

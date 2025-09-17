@@ -42,10 +42,12 @@ public class CommandHistory {
     }
 
     /**
-     * Abstract command class for implementing the Command pattern.
+     * Command class for implementing the Command pattern.
      */
-    public static abstract class Command {
-        public abstract String undo(TaskList tasks);
+    public static class Command {
+        public String undo(TaskList tasks) {
+            return "";
+        }
     }
 
     /**

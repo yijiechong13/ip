@@ -1,26 +1,94 @@
-# nailong.nailong project template
+# Nailong 🐣 - Your Friendly Task Manager
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+A cheerful JavaFX-based task management application featuring Nailong, your adorable digital assistant who helps you organize your daily tasks with a warm, encouraging personality.
 
-## Setting up in Intellij
+## Basic Features
+The main feature of the application is **Adding tasks**.
+You can add three types of tasks:
+* **Todo Tasks** – Simple tasks without deadlines
+```
+todo borrow book
+```
+* **Deadline Tasks**: Tasks with specific due dates (dd/MM/yyyy format)
+```
+deadline return book /by 25/12/2025
+```
+*
+* **Event Tasks**: Tasks with start and end times
+```
+event boot camp /from 22/09/2025 /to 24/09/2025
+```
+Other supported features include:
+* **List Tasks** : `list`
+* **Track completion status of tasks** : `mark/unmark <task_number>`
+```
+mark 1
+```
+* **Delete Task **: `delete <task_number>`
+* **Find Task**: `find <keyword>`
+```
+find book
+```
+* **Undo command**: `undo`
+* **Exit**: `bye`
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+## Date Formats
+The application supports the following date format: `dd/MM/yyyy` (e.g. 25/12/2025)
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/nailong.nailong.java` file, right-click it, and choose `Run nailong.nailong.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+## Project Structure
+```
+src/
+├── main/
+│   ├── java/
+│   │   ├── nailong/
+│   │   │   ├── Nailong.java          # Main application controller
+│   │   │   ├── Parser.java           # Command parsing and validation
+│   │   │   ├── TaskList.java         # Task collection management
+│   │   │   ├── Storage.java          # File I/O operations
+│   │   │   ├── Ui.java               # User interface messages
+│   │   │   ├── CommandHistory.java   # Undo functionality
+│   │   │   └── task/
+│   │   │       ├── Task.java         # Abstract base task class
+│   │   │       ├── Todo.java         # Simple task implementation
+│   │   │       ├── Deadline.java     # Task with due date
+│   │   │       └── Event.java        # Task with time period
+│   │   └── ui/
+│   │       ├── Main.java             # JavaFX application entry
+│   │       ├── Launcher.java         # Application launcher
+│   │       ├── MainWindow.java       # Primary GUI controller
+│   │       └── DialogBox.java        # Chat bubble components
+│   └── resources/
+│       ├── view/
+│       │   ├── MainWindow.fxml       # Main UI layout
+│       │   └── DialogBox.fxml        # Chat bubble layout
+│       ├── images/
+│       │   ├── User.png              # User avatar
+│       │   ├── Nailong.png           # Bot avatar
+│       │   └── background.jpg        # Background image
+│       └── styles/
+│           ├── main.css              # Main application styles
+│           └── dialog-box.css        # Chat bubble styles
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+data/
+└── Nailong.txt                       # Task storage file (created at runtime)
+```
+
+## Development
+### Building
+```
+./gradlew build
+```
+### Testing
+```
+./gradlew testing
+```
+### Code Style
+The project uses **Checkstyle** for code quality. Run checks with:
+```
+./gradlew checkstyleMain
+```
+
+## Storage
+All tasks are saved automatically in `./data/nailong.txt` in a human-readable format.  
+The folder and file will be created for you on the first run if they do not already exist.
+
