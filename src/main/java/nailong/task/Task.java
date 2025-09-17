@@ -91,7 +91,14 @@ public class Task {
             DateTimeFormatter strictFmt =
                     DateTimeFormatter.ofPattern("d/M/uuuu")
                             .withResolverStyle(ResolverStyle.STRICT);
-            return LocalDate.parse(datePart, strictFmt);
+            LocalDate parsedDate = LocalDate.parse(datePart, strictFmt);
+
+            LocalDate today = LocalDate.now();
+            if (parsedDate.isBefore(today)) {
+                throw new IllegalArgumentException("Cannot create tasks for past dates! Please use a future date.");
+            }
+
+            return parsedDate;
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date! Date does not exist!");
         }
