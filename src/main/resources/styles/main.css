@@ -1,7 +1,7 @@
 AnchorPane {
     /* background */
     -fx-background-color: linear-gradient(to bottom, #FFFDF4, #F9F6E6);
-    -fx-background-image: url("../images/background.jpg"); /* Set image */
+    -fx-background-image: url("/images/background.jpg"); /* Set image */
     -fx-background-size: cover;
     -fx-background-position: center bottom;
     -fx-background-repeat: no-repeat;
